@@ -1,0 +1,92 @@
+# depslib dependency file v1.0
+1464465748 source:c:\users\alex yu\onedrive\code\c作业\train\trainsystem\train\enum.c
+
+1465138239 c:\users\alex yu\onedrive\code\c作业\train\trainsystem\train\train.h
+	<stdio.h>
+	<math.h>
+	<string.h>
+	<process.h>
+	<time.h>
+	<stdlib.h>
+	<windows.h>
+
+1465141747 source:c:\users\alex yu\onedrive\code\c作业\train\trainsystem\train\io.c
+	"Train.h"
+
+1465141781 source:c:\users\alex yu\onedrive\code\c作业\train\trainsystem\train\main.c
+	"Train.h"
+
+1465136434 source:c:\users\alex yu\onedrive\code\c作业\train\trainsystem\train\move.c
+	"Train.h"
+
+1465130661 source:c:\code\bighomework\trainsystem\train\enum.c
+
+1465142596 c:\code\bighomework\trainsystem\train\train.h
+	<stdio.h>
+	<math.h>
+	<string.h>
+	<process.h>
+	<time.h>
+	<stdlib.h>
+	<windows.h>
+
+1465137419 source:c:\code\bighomework\trainsystem\train\move.c
+	"Train.h"
+
+1465304703 source:c:\code\bighomework\trainsystem\train\io.c
+	"Train.h"
+
+1465304588 source:c:\code\bighomework\trainsystem\train\main.c
+	"Train.h"
+
+1464241703 source:c:\code\bighomework\trainsystem\train\try.c
+	<stdio.h>
+
+1464465748 source:c:\users\alex yu\onedrive\code\c作业\train\trainsystem_local\train\enum.c
+
+1465135981 c:\users\alex yu\onedrive\code\c作业\train\trainsystem_local\train\train.h
+	<stdio.h>
+	<math.h>
+	<string.h>
+	<process.h>
+	<time.h>
+	<stdlib.h>
+	<windows.h>
+
+1465127670 D
+
+1465135695 source:c:\users\alex yu\onedrive\code\c作业\train\trainsystem_local\train\main.c
+	"Train.h"
+
+1465125584 cbf5ebed86f759ead4f9dd8c72e6eca1ce316
+	"Train.h"
+
+1465127770 source:c:\users\alex yu\onedrive\code\c作业\train\trainsystem_local\train\io.c
+	"Train.h"
+
+1465133956 source:c:\users\alex yu\onedrive\code\c作业\train\trainsystem_local\train\move.c
+	"Train.h"
+
+1464776278 source:c:\users\alex yu\onedrive\code\c作业\train\trainsystem_local\train\debug_standaloneio.c
+	"train.h"
+
+1465130661 source:c:\code\bighomework\trainsystem\train\debug_standaloneio.c
+	"train.h"
+
+1464459359 source:c:\users\alex yu\onedrive\code\c作业\train\trainsystem_local\train\freelists.c
+	"Train.h"
+
+1464776278 source:c:\users\alex yu\onedrive\code\c作业\train\trainsystem\train\debug_standaloneio.c
+	"train.h"
+
+1464459359 source:c:\users\alex yu\onedrive\code\c作业\train\trainsystem\train\freelists.c
+	"Train.h"
+
+1465130661 source:c:\code\bighomework\trainsystem\train\freelists.c
+	"Train.h"
+
+1333080557 source:c:\code\bighomework\trainsystem\train\ege5star.cpp
+	<graphics.h>
+	<time.h>
+	<math.h>
+

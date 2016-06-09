@@ -1,0 +1,40 @@
+将指令ins[]改为全局变量
+
+删除火车原来的STOP状态。将IDLE状态改名为STOP，并作为初始状态。
+删除Ins 值START 和LOCK
+增加成员clock_t defaultDockTime（靠站时长）和clock_t dockTime（剩余停靠时间）
+
+IO.c：在trainConfig.txt中：
+	增加支持：读取火车启动位置（dataInit的时候写入train.pos）
+	增加每辆车的启动时间（在什么时候启动）。
+	增加快车阈值 读入到全局变量int spdLine
+	
+在dataInit()中：
+	读入火车的启动时间。这个时间不写到火车的成员里，而是写到 记录指令的文件 里，作为 启动时间 处的指令ACC。
+	读入火车靠站时长写到defaultDockTime
+
+在show() 中：
+	显示火车快车还是慢车（根据速度的绝对值有没有spdLine大。）
+
+增加一个函数用于运行期间对 记录指令的文件 进行写入（给这个函数开一个线程）
+以实现“能从键盘输入命令控制火车启停、策略切换”
+
+在公共轨道中间有站点。
+增加一个函数检查所有火车和（所有站点和公共轨道两端（即监测点）），使得某一个火车经过或停靠某站时，显示这件事（某车经过（train.status==RUN）某站 或 某车停靠(train.status==DOCK)在某站，将在train.dockTime/(double)CLOCKS_PER_SEC秒后启动）。
+
+记录运行日志
+
+撞车警告（写move.c的人来写）
+
+move.c：
+	撞车检测
+	公共轨道
+		先来策略
+		人工策略：暂停仿真并询问		
+		先出策略
+
+	
+
+
+
+
