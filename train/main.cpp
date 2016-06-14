@@ -1,5 +1,5 @@
 #include "Train.h"
-
+#include "global.h"
 #define FRAME_COUNT 10 //每这么多帧输出一下
 
 
@@ -56,7 +56,7 @@ int main(void)
 			showTrain();
 			puts(hr);
 			showCommonTrack();
-			printf("\n");
+			printf("%d\n",startTime);
 
 			printf("请按回车键输入指令:");
 			frameCount = FRAME_COUNT;

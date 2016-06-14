@@ -11,8 +11,6 @@
 #include <stdlib.h>
 #include <windows.h>
 
-//#include "enum.cpp"
-
 #define MAX_STATION_AMOUNT 10
 #define MAX_TRACK_AMOUNT 10
 #define MAX_COMMON_TRACK_AMOUNT 10
@@ -96,34 +94,30 @@ typedef struct TrackList_name{
 	int amount;
 	Track* track[MAX_TRACK_AMOUNT];
 } TrackList;
-static TrackList trackList;//此类唯一全局变量
 
 typedef struct{
 	int amount;
 	CommonTrack* commonTrack[MAX_COMMON_TRACK_AMOUNT];
 } CommonTrackList;
-static CommonTrackList commonTrackList;//此类唯一全局变量
 
 typedef struct{
 	int amount;
 	Train* train[MAX_TRAIN_AMOUNT];
 } TrainList;
-static TrainList trainList;//此类唯一全局变量
 
 typedef struct{
     Ins ins;
     int trainID;
 }InputIns;
-static InputIns inputIns;//此类唯一全局变量
 
 typedef signed long long int int64;
 
-static Ins trainIns[MAX_TRAIN_AMOUNT];//指令列表
-static Train* trainWaiting[MAX_COMMON_TRACK_AMOUNT];//各公共轨道正在等待来车的火车。下标是公共轨道ID
-static STG CTSTG;//公共轨道策略
-static char CTW;//有车到达公共轨道入口时，是否需要等待对面来车之后再决定谁走。若!CTW，只在公共轨道同时将有2车要入时进行决定。
-static HANDLE hMutex;
-static clock_t startTime;
+//static Ins trainIns[MAX_TRAIN_AMOUNT];//指令列表
+//static Train* trainWaiting[MAX_COMMON_TRACK_AMOUNT];//各公共轨道正在等待来车的火车。下标是公共轨道ID
+//static STG CTSTG;//公共轨道策略
+//static char CTW;//有车到达公共轨道入口时，是否需要等待对面来车之后再决定谁走。若!CTW，只在公共轨道同时将有2车要入时进行决定。
+//static HANDLE hMutex;
+//static clock_t startTime;
 //-----------------------------------------------------------------------
 
 void freeLists(void);

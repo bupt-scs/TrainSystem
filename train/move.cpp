@@ -1,5 +1,5 @@
 #include "Train.h"
-
+#include "global.h"
 //找train前方的第一个车站位置
 unsigned long findNextStation(Train* train){
 	unsigned long nextPos;//返回这个

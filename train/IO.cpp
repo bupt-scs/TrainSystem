@@ -1,5 +1,5 @@
 #include "Train.h"
-
+#include "global.h"
 void startShow(){
     char ch;
     FILE* fptr = fopen("file/hello.txt","r");
@@ -8,6 +8,7 @@ void startShow(){
     printf("\n                          欢迎使用我们的小火车调度系统~\n");
     fclose(fptr);
 }
+
 
 void writeTrain(int ID,int trackID,unsigned long pos,int spd)
 {

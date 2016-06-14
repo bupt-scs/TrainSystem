@@ -1,4 +1,5 @@
 ﻿#include "Train.h"
+#include "global.h"
 char* strTrainState(TrainState sta)
 {
 	switch(sta){
