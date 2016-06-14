@@ -72,7 +72,7 @@ void dataInit()
 
 	if(fptr==NULL)
 	{
-		printf("打开火车信息文件失败,请重试。");
+		exit(20);
 	}
     //读取部分
 	fgets(s,1000,fptr);
@@ -105,110 +105,8 @@ void dataInit()
 
 		trainList.train[ID]->status = STOP;
 	}
-
-	//输出当前状况
-    showTrain();
     fclose(fptr);
-
-	printf("是否需要更改\"小火车配置\"的信息？Y/N:");
-    ch = getchar();
-    while(ch!='Y'&&ch!='N'&&ch!='y'&&ch!='n')
-    {
-        printf("请输入Y或N决定是否修改\"小火车配置\"的信息:");
-        ch=getchar();
-    }
-    if(ch=='N'||ch=='n')
-        ;
-    else
-    {
-        ID=99999;
-        puts(hr);
-        printf("以上为现有火车,请问需要进行什么操作？\n1.增加新的小火车\n2.修改已有小火车信息\n3.删除小火车\n4.设定终了\n请输入(1~4):");
-        fflush(stdin);
-        ch = getchar();
-        while(ch!='4')
-        {
-            switch(ch)
-            {
-                case '1':
-                    printf("请输入新加入火车编号,该编号小于%d:",MAX_TRAIN_AMOUNT);
-                    scanf("%d",&ID);
-                    while(trainList.train[ID]!=NULL||ID>MAX_TRAIN_AMOUNT)
-                    {
-                        printf("已存在该火车或输入不符合规范！请重新输入！（该编号小于%d）:",MAX_TRAIN_AMOUNT);
-                        scanf("%d",&ID);
-                    }
-                    printf("将新加入火车放置在哪条轨道上:");
-                    scanf("%d",&trackID);
-                    printf("请输入新加入火车的坐标:");
-                    scanf("%d",&pos);
-                    printf("请输入新加入火车速度:");
-                    scanf("%d",&spd);
-                    writeTrain(ID,trackID,pos,spd);
-
-                    break;
-                case '2':
-                    printf("请输入待修改的火车编号,该编号小于%d:",MAX_TRAIN_AMOUNT);
-                    scanf("%d",&ID);
-                    while(trainList.train[ID]==NULL||ID>MAX_TRAIN_AMOUNT)
-                    {
-                        printf("不存在该火车或输入不符合规范！请重新输入！（该编号小于%d）:",MAX_TRAIN_AMOUNT);
-                        scanf("%d",&ID);
-                    }
-                    printf("请输入需要修改的火车编号,该编号小于%d:",MAX_TRAIN_AMOUNT);
-                    scanf("%d",&ID);
-                    printf("该火车放置在哪条轨道上:");
-                    scanf("%d",&trackID);
-                    printf("该火车坐标为:");
-                    scanf("%d",&pos);
-                    printf("该火车速度为:");
-                    scanf("%d",&spd);
-                    writeTrain(ID,trackID,pos,spd);
-                    break;
-                case '3':
-                    printf("请问要删除哪辆火车:");
-                    scanf("%d",&ID);
-                    while(trainList.train[ID]==NULL||ID>MAX_TRAIN_AMOUNT)
-                    {
-                        printf("不存在该火车或输入不符合规范！请重新输入:");
-                        scanf("%d",&ID);
-                    }
-                    free(trainList.train[ID]);
-                    trainList.train[ID] = NULL;
-                    trainList.amount--;
-                    break;
-            }
-            showTrain();
-            puts(hr);
-            printf("以上为现有火车,请问需要进行什么操作？\n1.增加新的小火车\n2.修改已有小火车信息\n3.删除小火车\n4.设定终了\n请输入(1~4):");
-            fflush(stdin);
-            ch = getchar();
-        }
-        fptr = fopen("file/trainConfig.txt","w");
-        fprintf(fptr,"火车总数:\n%d\n",trainList.amount);
-        for(i=1;i<=MAX_TRAIN_AMOUNT;i++)
-        {
-            if(trainList.train[i]!=NULL)
-            {
-                fprintf(fptr,"\n列车ID:\n%d\n",trainList.train[i]->ID);
-                fprintf(fptr,"所在轨道:\n%d\n",trainList.train[i]->trackID);
-                fprintf(fptr,"坐标:\n%d\n",trainList.train[i]->pos);
-                fprintf(fptr,"速度:\n%d\n",trainList.train[i]->spd);
-            }
-        }
-        fclose(fptr);
-    }
-    system("cls");
-    startShow();
-    printf("内容已保存\n");
-    showTrain();
-    printf("此为当前火车信息,按回车键进行下一步。");
-    fflush(stdin);
-    getchar();
-    fflush(stdin);
-    system("cls");
 //----------------------------------单一轨道部分---------------------------
-    startShow();
 	//初始化指针
 	for(i=0;i<=MAX_TRACK_AMOUNT;i++)
     {
@@ -218,7 +116,7 @@ void dataInit()
 	fptr = fopen("file/trackConfig.txt","r");
 	if(fptr==NULL)
 	{
-		printf("打开轨道信息文件失败,请重试。");
+		exit(21);
 	}
 	fgets(s,1000,fptr);						//轨道总数
 
@@ -255,109 +153,8 @@ void dataInit()
 			fgets(s,1000,fptr);
 		}
 	}
-	showTrack();
-	puts(hr);
-    fclose(fptr);
 
-	printf("是否需要更改\"轨道配置\"的信息？Y/N:");
-    ch = getchar();
-    while(ch!='Y'&&ch!='N'&&ch!='y'&&ch!='n')
-    {
-        printf("请输入Y或N决定是否修改\"轨道配置\"的信息:");
-        ch=getchar();
-    }
-    if(ch=='N'||ch=='n')
-        ;
-    else
-    {
-        ID=99999;
-        puts(hr);
-        printf("以上为现有轨道,请问需要进行什么操作？\n1.增加新的轨道\n2.修改已有轨道信息\n3.设定终了\n请输入(1~3):");
-        fflush(stdin);
-        ch = getchar();
-        while(ch!='3')
-        {
-            switch(ch)
-            {
-                case '1':
-                    printf("请输入新加入轨道编号,该编号小于%d:",MAX_TRACK_AMOUNT);
-                    scanf("%d",&ID);
-                    while(trackList.track[ID]!=NULL||ID>MAX_TRACK_AMOUNT)
-                    {
-                        printf("已存在该轨道或输入不符合规范！请重新输入！（该编号小于%d）:",MAX_TRAIN_AMOUNT);
-                        scanf("%d",&ID);
-                    }
-                    printf("轨道长度为:");
-                    scanf("%d",&length);
-                    printf("是否环路？（是为1,否为0）:");
-                    scanf("%d",&cycle);
-                    printf("共有几个车站？");
-                    scanf("%d",&stationAmount);
-                    printf("各车站坐标（每行输入一个坐标）:\n");
-                    for(i=0;i<stationAmount;i++)
-                    {
-                        scanf("%d",&stationPos[i]);
-                    }
-                    writeTrack(ID,length,cycle,stationAmount,stationPos);
-                    break;
-                case '2':
-                    printf("请输入待修改的轨道编号,该编号小于%d:",MAX_TRACK_AMOUNT);
-                    scanf("%d",&ID);
-                    while(trackList.track[ID]==NULL||ID>MAX_TRACK_AMOUNT)
-                    {
-                        printf("不存在该轨道或输入不符合规范！请重新输入！（该编号小于%d）:",MAX_TRAIN_AMOUNT);
-                        scanf("%d",&ID);
-                    }
-                    printf("轨道长度为:");
-                    scanf("%d",&length);
-                    printf("是否环路？（是为1,否为0）:");
-                    scanf("%d",&cycle);
-                    printf("共有几个车站？");
-                    scanf("%d",&stationAmount);
-                    printf("各车站坐标（每行输入一个坐标）:\n");
-                    for(i=0;i<stationAmount;i++)
-                    {
-                        scanf("%d",&stationPos[i]);
-                    }
-                    writeTrack(ID,length,cycle,stationAmount,stationPos);
-                    break;
-            }
-            showTrack();
-            puts(hr);
-            printf("以上为现有轨道,请问需要进行什么操作？\n1.增加新的轨道\n2.修改已有轨道信息\n3.设定终了\n请输入(1~3):");
-            fflush(stdin);
-            ch = getchar();
-        }
-        fptr = fopen("file/trackConfig.txt","w");
-        fprintf(fptr,"轨道总数:\n%d\n",trackList.amount);
-        for(i=1;i<=MAX_TRACK_AMOUNT;i++)
-        {
-            if(trackList.track[i]!=NULL)
-            {
-                fprintf(fptr,"\n轨道ID:\n%d\n",trackList.track[i]->ID);
-                fprintf(fptr,"轨道长度:\n%u\n",trackList.track[i]->length);
-                fprintf(fptr,"是否环路:\n%d\n",trackList.track[i]->cycle);
-                fprintf(fptr,"车站总数:\n%d\n",trackList.track[i]->stationAmount);
-                fprintf(fptr,"各车站坐标:\n");
-                for(j=0;j<trackList.track[i]->stationAmount;j++)
-                {
-                    fprintf(fptr,"%d\n",trackList.track[i]->stationPos[j]);
-                }
-            }
-        }
-        fclose(fptr);
-    }
-    system("cls");
-    startShow();
-    printf("内容已保存\n");
-    showTrack();
-    printf("此为当前\"轨道\"信息,按回车键进行下一步。");
-    fflush(stdin);
-    getchar();
-    fflush(stdin);
-    system("cls");
 //-------------------------------------公共轨道部分-------------------------------------
-    startShow();
     for(i=0;i<=MAX_COMMON_TRACK_AMOUNT;i++)
     {
         commonTrackList.commonTrack[i] = NULL;
@@ -366,7 +163,7 @@ void dataInit()
 	fptr = fopen("file/commontrackConfig.txt","r");
 	if(fptr==NULL)
 	{
-		printf("打开\"公共轨道\"信息文件失败,请重试。");
+		exit(21);
 	}
 
 	fgets(s,1000,fptr);						//公共轨道总数
@@ -404,6 +201,7 @@ void dataInit()
 		fgets(s,1000,fptr);
 	}
 	//输出当前状况
+/*
     showCommonTrack();
     puts(hr);
     printf("请确认公共轨道信息,回车键开始运行调控系统。");
@@ -444,7 +242,9 @@ void dataInit()
         case '2':case '5': CTSTG=FFI;printf("快车先行策略已选择\n");break;
         case '3':case '6': CTSTG=RAD;printf("随机策略已选择\n");break;
     }
-
+*/
+    CTW=0;
+    CTSTG=FFI;
 }
 
 void showTrain()
@@ -701,6 +501,7 @@ void userIns(clock_t curTime,clock_t frameDur)
     double time;
     int ID;
     char s[10];
+
     FILE* fptr;
     fptr = fopen("file/insConfig.txt","r");
     for(;fscanf(fptr,"%lf",&time)==1;)
@@ -714,6 +515,7 @@ void userIns(clock_t curTime,clock_t frameDur)
         }
     }
     fclose(fptr);
+
     if(inputIns.trainID!=9999)
     {
         trainIns[inputIns.trainID] = inputIns.ins;
@@ -722,6 +524,7 @@ void userIns(clock_t curTime,clock_t frameDur)
 }
 
 
+/*
 DWORD WINAPI insDuringRun(LPVOID pPararneter)
 {
     int ID=0;
@@ -833,3 +636,4 @@ DWORD WINAPI insDuringRun(LPVOID pPararneter)
         ReleaseMutex(hMutex);
 	}
 }
+*/

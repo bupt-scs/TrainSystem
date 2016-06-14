@@ -15,4 +15,7 @@ extern TrainList trainList;//此类唯一全局变量
 
 extern InputIns inputIns;//此类唯一全局变量
 extern Ins trainIns[MAX_TRAIN_AMOUNT];//指令列表
+
+extern PIMAGE backGround;
+extern PIMAGE trainPic;
 #endif

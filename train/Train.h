@@ -1,6 +1,6 @@
 #pragma once
-#ifndef _TEST_H
-    #define _TEST_H
+#ifndef TRAIN_H
+    #define TRAIN_H
 
 #include <cstdio>
 #include <cmath>
@@ -10,6 +10,7 @@
 #include <time.h>
 #include <stdlib.h>
 #include <windows.h>
+#include <graphics.h>
 
 #define MAX_STATION_AMOUNT 10
 #define MAX_TRACK_AMOUNT 10
@@ -135,7 +136,7 @@ Ins enumIns(char* a);
 TrainState enumTrainState(char* a);
 
 //IO.cpp
-DWORD WINAPI insDuringRun(LPVOID pPararneter);
+//DWORD WINAPI insDuringRun(LPVOID pPararneter);
 void fLog(char show,char* fileName,int trainID,char* msg,clock_t curTime);
 void showTrain();
 void showTrack();
@@ -178,4 +179,17 @@ void dealCommonTrack(CommonTrack* cT,Ins ins[],clock_t curTime,clock_t frameDur)
 void checkCrash(clock_t curTime,clock_t frameDur);
 void moveAllTrain(clock_t curTime,clock_t frameDur);
 //遍历所有commonTrack和train，根据状况对每个train调用moveTrain()，传达指令.
+
+//------------------------图形化内容
+struct AniObj
+{
+    int trainID;
+    int dir;//方向,0为左右，1为上下
+	float x, y;
+};
+
+
+void insByMouse(void);
+DWORD WINAPI printGraph(LPVOID pPararneter);
+DWORD WINAPI insByMouse(LPVOID pPararneter);
 #endif

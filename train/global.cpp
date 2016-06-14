@@ -14,3 +14,6 @@ TrainList trainList;//此类唯一全局变量
 
 InputIns inputIns;//此类唯一全局变量
 Ins trainIns[MAX_TRAIN_AMOUNT];//指令列表
+
+PIMAGE backGround;
+PIMAGE trainPic;

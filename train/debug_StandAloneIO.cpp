@@ -1,4 +1,5 @@
-
+#include "Train.h"
+#include "global.h"
 void dataInit_StandAlone(){
     int i;
     CTSTG=ASK;

@@ -124,7 +124,7 @@ void moveTrain(Train* train,Ins ins,clock_t curTime,clock_t frameDur)
 	switch(train->status){//坐标增加
 		case RUN:
 			if(curTrack->cycle){
-				train->pos=(train->pos+x)%(curTrack->length);
+				train->pos=(train->pos+x+curTrack->length)%(curTrack->length);
 				break;
 			}
 			else{//非环路：到头就停
