@@ -1,6 +1,4 @@
-#include"Train.h"
-
-
+#include "Train.h"
 
 //找train前方的第一个车站位置
 unsigned long findNextStation(Train* train){
@@ -95,7 +93,7 @@ void moveTrain(Train* train,Ins ins,clock_t curTime,clock_t frameDur)
 						if(ct->track1==train->trackID&&ct->status==FREE){
                             train->status=RUN;
                             trainWaiting[ct->ID]=NULL;
-                            openLog();
+                            FILE* log=fopen("Log.txt","a");fprintf(log,"\n[%d ms] ",curTime);
                                 fprintf(log,"列车ID %d 等待的公共轨道%d已空闲，列车启动。\n",
                                         train->ID,ct->ID);
                             fclose(log);
@@ -106,7 +104,7 @@ void moveTrain(Train* train,Ins ins,clock_t curTime,clock_t frameDur)
 						if(ct->track2==train->trackID&&ct->status==FREE){
                             train->status=RUN;
                             trainWaiting[ct->ID]=NULL;
-                            openLog();
+                            FILE* log=fopen("Log.txt","a");fprintf(log,"\n[%d ms] ",curTime);
                                 fprintf(log,"列车ID %d 等待的公共轨道%d已空闲，列车启动。\n",
                                         train->ID,ct->ID);
                             fclose(log);
@@ -148,7 +146,7 @@ void moveTrain(Train* train,Ins ins,clock_t curTime,clock_t frameDur)
                 //fLog(0,"Log.txt",train->ID,"AT STATION",curTime);
                 if(train->dockTime==train->defaultDockTime){
                     printf("列车 %d 将停靠 %.3f秒\n",train->ID,train->dockTime/1000.0);
-                    openLog();
+                    FILE* log=fopen("Log.txt","a");fprintf(log,"\n[%d ms] ",curTime);
                         fprintf(log,"列车 %d 到站：将停靠 %.3f秒\n",train->ID,train->dockTime/1000.0);
                     fclose(log);
                 }
@@ -159,7 +157,7 @@ void moveTrain(Train* train,Ins ins,clock_t curTime,clock_t frameDur)
 				if(train->dockTime<0) {
                     train->status=RUN;
                     printf("列车 %d 离站\n",train->ID);
-                    openLog();
+                    FILE* log=fopen("Log.txt","a");fprintf(log,"\n[%d ms] ",curTime);
                         fprintf(log,"列车 %d 离站\n",train->ID);
                     fclose(log);
                     //fLog(0,"Log.txt",train->ID,"LEAVE STATION",curTime);
@@ -187,7 +185,7 @@ void judgeCommonTrack(CommonTrack* cT,Train* enter[],int ei,clock_t curTime){
     }
     printf(" 在公共轨道%d入口处等待调度\n",cT->ID);
 
-    openLog();
+    FILE* log=fopen("Log.txt","a");fprintf(log,"\n[%d ms] ",curTime);
         fprintf(log,"列车");
         for(ii=0;ii<=ei;ii++){
             fprintf(log," %d",enter[ii]->ID);
@@ -273,7 +271,7 @@ void dealCommonTrack(CommonTrack* cT,Ins ins[],clock_t curTime,clock_t frameDur)
 						if(cp<in1&&in1<=np){
 							enter[ei]=t;
 							ei++;
-							openLog();
+							FILE* log=fopen("Log.txt","a");fprintf(log,"\n[%d ms] ",curTime);
 							fprintf(log,"列车 ID %d 到达公共轨道 %d 入口\n",t->ID,cT->ID);
 							fclose(log);
 						}
@@ -281,7 +279,7 @@ void dealCommonTrack(CommonTrack* cT,Ins ins[],clock_t curTime,clock_t frameDur)
                         if(np<=out1&&out1<cp){
 							enter[ei]=t;
 							ei++;
-							openLog();
+							FILE* log=fopen("Log.txt","a");fprintf(log,"\n[%d ms] ",curTime);
 							fprintf(log,"列车 ID %d 到达公共轨道 %d 入口\n",t->ID,cT->ID);
 							fclose(log);
 						}
@@ -292,7 +290,7 @@ void dealCommonTrack(CommonTrack* cT,Ins ins[],clock_t curTime,clock_t frameDur)
 						if(cp<in2&&in2<=np){
 							enter[ei]=t;
 							ei++;
-							openLog();
+							FILE* log=fopen("Log.txt","a");fprintf(log,"\n[%d ms] ",curTime);
 							fprintf(log,"列车 ID %d 到达公共轨道 %d 入口\n",t->ID,cT->ID);
 							fclose(log);
 						}
@@ -300,7 +298,7 @@ void dealCommonTrack(CommonTrack* cT,Ins ins[],clock_t curTime,clock_t frameDur)
                         if(np<=out2&&out2<cp){
 							enter[ei]=t;
 							ei++;
-							openLog();
+							FILE* log=fopen("Log.txt","a");fprintf(log,"\n[%d ms] ",curTime);
 							fprintf(log,"列车 ID %d 到达公共轨道 %d 入口\n",t->ID,cT->ID);
 							fclose(log);
 						}
@@ -344,7 +342,7 @@ void dealCommonTrack(CommonTrack* cT,Ins ins[],clock_t curTime,clock_t frameDur)
                     else{
                         printf("\n%.3f s：列车%d 进入公共轨道 %d\n",
                         curTime/(double)CLOCKS_PER_SEC,enter[ei]->ID,cT->ID);
-                        openLog();
+                        FILE* log=fopen("Log.txt","a");fprintf(log,"\n[%d ms] ",curTime);
                             fprintf(log,"列车%d 进入公共轨道 %d\n",enter[ei]->ID,cT->ID);
                         fclose(log);
                     }

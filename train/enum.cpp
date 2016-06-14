@@ -1,6 +1,6 @@
 ﻿#include "Train.h"
-
-char* strTrainState(TrainState sta){
+char* strTrainState(TrainState sta)
+{
 	switch(sta){
 		case STOP: return "STOP";
 		case STATION: return "STATION";

@@ -1,10 +1,18 @@
-#include <stdio.h>
-#include <math.h>
+#pragma once
+#ifndef _TEST_H
+    #define _TEST_H
+
+#include <cstdio>
+#include <cmath>
 #include <string.h>
+#include <string>
 #include <process.h>
 #include <time.h>
 #include <stdlib.h>
 #include <windows.h>
+
+//#include "enum.cpp"
+
 #define MAX_STATION_AMOUNT 10
 #define MAX_TRACK_AMOUNT 10
 #define MAX_COMMON_TRACK_AMOUNT 10
@@ -14,7 +22,7 @@
 #define max(a,b) ((a)>(b)?(a):(b))
 #define min(a,b) ((a)<(b)?(a):(b))
 #define hr "-----------------------------------------------------------------------------------\n"
-#define openLog() FILE* log=fopen("Log.txt","a");fprintf(log,"\n[%d ms] ",curTime)
+//#define openLog() FILE* log=fopen("Log.txt","a");fprintf(log,"\n[%d ms] ",curTime)
 
 /****************************************************************************
 *****************************************************************************
@@ -24,9 +32,6 @@
 **															               **
 *****************************************************************************
 ****************************************************************************/
-
-
-
 
 //火车状态
 typedef enum{
@@ -61,7 +66,7 @@ typedef enum{
 typedef struct{
 	int ID; //在trackList.track[]的下标
 	unsigned long length;//轨道长度。所有轨道的单位都统一.
-	char cycle;//是否环路
+	int cycle;//是否环路
 	int stationAmount;//车站总数
 	unsigned long stationPos[MAX_STATION_AMOUNT];//各车站的坐标。在最初读入轨道数据的时候保证车站坐标按升序录入此数组。
 } Track;
@@ -91,65 +96,41 @@ typedef struct TrackList_name{
 	int amount;
 	Track* track[MAX_TRACK_AMOUNT];
 } TrackList;
-TrackList trackList;//此类唯一全局变量
+static TrackList trackList;//此类唯一全局变量
 
 typedef struct{
 	int amount;
 	CommonTrack* commonTrack[MAX_COMMON_TRACK_AMOUNT];
 } CommonTrackList;
-CommonTrackList commonTrackList;//此类唯一全局变量
+static CommonTrackList commonTrackList;//此类唯一全局变量
 
 typedef struct{
 	int amount;
 	Train* train[MAX_TRAIN_AMOUNT];
 } TrainList;
-TrainList trainList;//此类唯一全局变量
+static TrainList trainList;//此类唯一全局变量
 
 typedef struct{
     Ins ins;
     int trainID;
 }InputIns;
-InputIns inputIns;//此类唯一全局变量
+static InputIns inputIns;//此类唯一全局变量
 
 typedef signed long long int int64;
 
-Ins trainIns[MAX_TRAIN_AMOUNT];//指令列表
-Train* trainWaiting[MAX_COMMON_TRACK_AMOUNT];//各公共轨道正在等待来车的火车。下标是公共轨道ID
-STG CTSTG;//公共轨道策略
-char CTW;//有车到达公共轨道入口时，是否需要等待对面来车之后再决定谁走。若!CTW，只在公共轨道同时将有2车要入时进行决定。
-HANDLE hMutex;
-clock_t startTime;
+static Ins trainIns[MAX_TRAIN_AMOUNT];//指令列表
+static Train* trainWaiting[MAX_COMMON_TRACK_AMOUNT];//各公共轨道正在等待来车的火车。下标是公共轨道ID
+static STG CTSTG;//公共轨道策略
+static char CTW;//有车到达公共轨道入口时，是否需要等待对面来车之后再决定谁走。若!CTW，只在公共轨道同时将有2车要入时进行决定。
+static HANDLE hMutex;
+static clock_t startTime;
 //-----------------------------------------------------------------------
-
-//int writeTrain(int ID,int trackID,unsigned long pos,int spd);
-////检查trainList.train[ID]，若为NULL，在这里为新的Train申请空间，并写入各参数。若不为NULL，将参数覆盖写入。
-//
-//int writeTrack(int ID,unsigned long length,int cycle,
-//			int stationAmount,unsigned long stationPos[]);
-////检查trackList.track[ID]，若为NULL，在这里为新的Track申请空间，并写入各参数。若不为NULL，将参数覆盖写入。
-//
-//int writeCommonTrack(int ID,Track* track1,Track* track2,
-//			int track1in,int track2in,int track1out,int track2out);
-////检查commonTrackList.track[ID]，若为NULL，在这里为新的CommonTrack申请空间，并写入各参数。
-////若不为NULL，将参数覆盖写入。 最后检查所有Train的位置，判断占用情况，并写入commonTrackList.track[ID]->status
-
-void fshowTrack(char* fName);
-void fshowCommonTrack(char* fName);
-void moveAllTrain(clock_t curTime,clock_t frameDur);
-//遍历所有commonTrack和train，根据状况对每个train调用moveTrain()，传达指令.
-
-void dataInit();//从文件中读取数据，并修改
-void dataInit_StandAlone();//debug用，dataInit的无交互版本
-
-void startShow();
-
-void userIns(clock_t curTime,clock_t frameDur);
-//在moveAllTrain()中调用。
-//将用户对列车的指令写入指令列表Ins[],在早期版本中，这个函数从文件读入指令，将当前时间的指令写入Ins[]
 
 void freeLists(void);
 //free三个list
+void dataInit_StandAlone();
 
+//enum.cpp
 //枚举转换为字符串
 char* strTrainState(TrainState sta);
 char* strCommonTrackState(CommonTrackState sta);
@@ -159,5 +140,48 @@ CommonTrackState enumCommonTrackState(char* a);
 Ins enumIns(char* a);
 TrainState enumTrainState(char* a);
 
+//IO.cpp
 DWORD WINAPI insDuringRun(LPVOID pPararneter);
 void fLog(char show,char* fileName,int trainID,char* msg,clock_t curTime);
+void showTrain();
+void showTrack();
+void showCommonTrack();
+
+void dataInit();
+
+void writeTrain(int ID,int trackID,unsigned long pos,int spd);
+////检查trainList.train[ID]，若为NULL，在这里为新的Train申请空间，并写入各参数。若不为NULL，将参数覆盖写入。
+//
+void writeTrack(int ID,unsigned long length,int cycle,
+			int stationAmount,unsigned long stationPos[]);
+////检查trackList.track[ID]，若为NULL，在这里为新的Track申请空间，并写入各参数。若不为NULL，将参数覆盖写入。
+//
+void writeCommonTrack(int ID,int track1,int track2,
+			int track1in,int track2in,int track1out,int track2out);
+////检查commonTrackList.track[ID]，若为NULL，在这里为新的CommonTrack申请空间，并写入各参数。
+////若不为NULL，将参数覆盖写入。 最后检查所有Train的位置，判断占用情况，并写入commonTrackList.track[ID]->status
+
+void fshowTrack(char* fName);
+void fshowCommonTrack(char* fName);
+
+void dataInit();//从文件中读取数据，并修改
+
+void startShow();
+
+void userIns(clock_t curTime,clock_t frameDur);
+//在moveAllTrain()中调用。
+//将用户对列车的指令写入指令列表Ins[],在早期版本中，这个函数从文件读入指令，将当前时间的指令写入Ins[]
+
+
+//debug.cpp
+void dataInit_StandAlone();
+
+//  move.cpp
+unsigned long findNextStation(Train* train);
+void moveTrain(Train* train,Ins ins,clock_t curTime,clock_t frameDur);
+void judgeCommonTrack(CommonTrack* cT,Train* enter[],int ei,clock_t curTime);
+void dealCommonTrack(CommonTrack* cT,Ins ins[],clock_t curTime,clock_t frameDur);
+void checkCrash(clock_t curTime,clock_t frameDur);
+void moveAllTrain(clock_t curTime,clock_t frameDur);
+//遍历所有commonTrack和train，根据状况对每个train调用moveTrain()，传达指令.
+#endif

@@ -1,4 +1,4 @@
-#include"Train.h"
+#include "Train.h"
 
 void startShow(){
     char ch;
@@ -9,7 +9,7 @@ void startShow(){
     fclose(fptr);
 }
 
-int writeTrain(int ID,int trackID,unsigned long pos,int spd)
+void writeTrain(int ID,int trackID,unsigned long pos,int spd)
 {
     if(trainList.train[ID]==NULL)
     {
@@ -22,13 +22,13 @@ int writeTrain(int ID,int trackID,unsigned long pos,int spd)
 	trainList.train[ID]->spd = spd;
 	trainList.train[ID]->status = STOP; //默认为运行
 }
-int writeTrack(int ID,unsigned long length,int cycle,int stationAmount,unsigned long stationPos[])
+void writeTrack(int ID,unsigned long length,int cycle,int stationAmount,unsigned long stationPos[])
 {
     int i=1;
     if(trackList.track[ID]==NULL)
     {
         trackList.amount++;
-        trackList.track[ID] = malloc(sizeof(Track));
+        trackList.track[ID] =(Track*) malloc(sizeof(Track));
     }
     trackList.track[ID]->ID = ID;
     trackList.track[ID]->length = length;
@@ -39,11 +39,11 @@ int writeTrack(int ID,unsigned long length,int cycle,int stationAmount,unsigned 
         trackList.track[ID]->stationPos[i-1] = stationPos[i-1];
     }
 }
-int writeCommonTrack(int ID,Track* track1,Track* track2,int track1in,int track2in,int track1out,int track2out)
+void writeCommonTrack(int ID,int track1,int track2,int track1in,int track2in,int track1out,int track2out)
 {
     if(commonTrackList.commonTrack[ID] == NULL)
     {
-        commonTrackList.commonTrack[ID] = malloc(sizeof(CommonTrack));
+        commonTrackList.commonTrack[ID] =(CommonTrack*) malloc(sizeof(CommonTrack));
         commonTrackList.amount++;
     }
     commonTrackList.commonTrack[ID]->track1 = track1;
@@ -232,7 +232,7 @@ void dataInit()
 		fscanf(fptr,"%d",&ID);
 		fgets(s,1000,fptr);
 
-        trackList.track[ID] = malloc(sizeof(Track));
+        trackList.track[ID] =(Track*) malloc(sizeof(Track));
         trackList.track[ID]->ID = ID;
 
 		fgets(s,1000,fptr);
@@ -416,7 +416,7 @@ void dataInit()
 	ch = getchar();
 	fflush(stdin);
 	do{
-        while((ch<'1'||ch>'6')&&(ch!='?'&&ch!='？'))
+        while((ch<'1'||ch>'6')&&(ch!='?'))
         {
             fflush(stdin);
             printf("请重新输入:");

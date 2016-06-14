@@ -30,26 +30,15 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
+			<Add option="-fexceptions" />
 		</Compiler>
-		<Unit filename="IO.c">
-			<Option compilerVar="CC" />
-		</Unit>
+		<Unit filename="IO.cpp" />
 		<Unit filename="Train.h" />
-		<Unit filename="debug_StandAloneIO.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="enum.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="freeLists.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="main.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="move.c">
-			<Option compilerVar="CC" />
-		</Unit>
+		<Unit filename="debug_StandAloneIO.cpp" />
+		<Unit filename="enum.cpp" />
+		<Unit filename="freeLists.cpp" />
+		<Unit filename="main.cpp" />
+		<Unit filename="move.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />

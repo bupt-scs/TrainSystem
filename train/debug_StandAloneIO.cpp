@@ -1,4 +1,3 @@
-#include"train.h"
 
 void dataInit_StandAlone(){
     int i;

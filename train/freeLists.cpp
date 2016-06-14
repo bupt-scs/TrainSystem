@@ -1,4 +1,5 @@
-#include"Train.h"
+#include "Train.h"
+
 void freeLists(void){
         int i;
         for(i = 0;i < MAX_TRAIN_AMOUNT;i++){

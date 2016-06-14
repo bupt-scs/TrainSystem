@@ -1,5 +1,9 @@
 #include "Train.h"
+
 #define FRAME_COUNT 10 //每这么多帧输出一下
+
+
+using namespace std;
 
 int main(void)
 {

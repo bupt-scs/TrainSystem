@@ -21,10 +21,11 @@
 
 1465130661 source:c:\code\bighomework\trainsystem\train\enum.c
 
-1465142596 c:\code\bighomework\trainsystem\train\train.h
-	<stdio.h>
-	<math.h>
+1465888320 c:\code\bighomework\trainsystem\train\train.h
+	<cstdio>
+	<cmath>
 	<string.h>
+	<string>
 	<process.h>
 	<time.h>
 	<stdlib.h>
@@ -89,4 +90,31 @@
 	<graphics.h>
 	<time.h>
 	<math.h>
+
+1465836120 source:c:\code\bighomework\trainsystem\train\debug_standaloneio.cpp
+	"train.h"
+
+1465887507 source:c:\code\bighomework\trainsystem\train\enum.cpp
+
+1465887552 source:c:\code\bighomework\trainsystem\train\freelists.cpp
+	"Train.h"
+
+1465887672 source:c:\code\bighomework\trainsystem\train\io.cpp
+	"Train.h"
+
+1465887964 source:c:\code\bighomework\trainsystem\train\main.cpp
+	"Train.h"
+
+1465887552 source:c:\code\bighomework\trainsystem\train\move.cpp
+	"Train.h"
+
+1465886324 c:\code\bighomework\trainsystem\train\enum.cpp
+
+1465885572 c:\code\bighomework\trainsystem\train\freelists.cpp
+
+1465885572 c:\code\bighomework\trainsystem\train\io.cpp
+
+1465885572 c:\code\bighomework\trainsystem\train\move.cpp
+
+1465885572 c:\code\bighomework\trainsystem\train\debug_standaloneio.cpp
 
