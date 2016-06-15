@@ -1,5 +1,6 @@
 #include "Train.h"
 #include "global.h"
+
 #define FRAME_COUNT 10 //每这么多帧输出一下
 
 using namespace std;

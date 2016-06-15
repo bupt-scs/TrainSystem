@@ -190,4 +190,7 @@ struct AniObj
 
 void insByMouse(mouse_msg msg,int *trainID);
 DWORD WINAPI printGraph(LPVOID pPararneter);
+
+void printTrain();
+void printCommonTrack();
 #endif

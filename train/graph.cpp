@@ -133,6 +133,8 @@ DWORD WINAPI printGraph(LPVOID pPararneter)
 		cleardevice();
 
 		putimage(0,0,backGround);
+        printTrain();
+        printCommonTrack();
 
         insByMouse(msg,&trainID);//右侧按钮面板
 
@@ -188,49 +190,49 @@ void insByMouse(mouse_msg msg,int *trainID)
         setcolor(EGERGB(0, 0, 0));
         setfontbkcolor(EGERGB(164, 164, 164));
         setfont(25, 0, "宋体");
-        outtextxy(639, 100, "Train 1");
-        outtextxy(639, 145, "Train 2");
-        outtextxy(639, 190, "Train 3");
+        outtextxy(633, 100, "Train 1");
+        outtextxy(633, 145, "Train 2");
+        outtextxy(633, 190, "Train 3");
 
         setcolor(EGERGB(255, 236, 77));
 
         switch(*trainID)
         {
-            case 1:outtextxy(639, 100, "Train 1");break;
-            case 2:outtextxy(639, 145, "Train 2");break;
-            case 3:outtextxy(639, 190, "Train 3");break;
+            case 1:outtextxy(633, 100, "Train 1");break;
+            case 2:outtextxy(633, 145, "Train 2");break;
+            case 3:outtextxy(633, 190, "Train 3");break;
         }
 
-        if(msg.x>639&&msg.x<725&&msg.y>96&&msg.y<129)
+        if(msg.x>633&&msg.x<725&&msg.y>96&&msg.y<129)
         {
             if((int)msg.is_down()==0&& *trainID!=1)
             {
                 setcolor(EGERGB(35, 248, 235));
-                outtextxy(639, 100, "Train 1");
+                outtextxy(633, 100, "Train 1");
             }
             else if((int)msg.is_down())
             {
                 *trainID = 1;
             }
         }
-        else if(msg.x>639&&msg.x<725&&msg.y>141&&msg.y<174)
+        else if(msg.x>633&&msg.x<725&&msg.y>141&&msg.y<174)
         {
             if((int)msg.is_down()==0&& *trainID!=2)
             {
                 setcolor(EGERGB(35, 248, 235));
-                outtextxy(639, 145, "Train 2");
+                outtextxy(633, 145, "Train 2");
             }
             else if((int)msg.is_down())
             {
                 *trainID = 2;
             }
         }
-        else if(msg.x>639&&msg.x<725&&msg.y>186&&msg.y<219)
+        else if(msg.x>633&&msg.x<725&&msg.y>186&&msg.y<219)
         {
             if((int)msg.is_down()==0&& *trainID!=3)
             {
                 setcolor(EGERGB(35, 248, 235));
-                outtextxy(639, 190, "Train 3");
+                outtextxy(633, 190, "Train 3");
             }
             else if((int)msg.is_down())
             {
@@ -354,4 +356,95 @@ void insByMouse(mouse_msg msg,int *trainID)
       //  itoa(trainList.train[4]->spd, str, 10);
        // outtextxy(0, 0, str);
    //     ReleaseMutex(hMutex);
+}
+
+void printTrain()
+{
+    int i;
+    char str[20];
+    setfont(18, 0, "宋体");
+
+    setcolor(EGERGB(0, 0, 0));
+    setfontbkcolor(EGERGB(164, 164, 164));
+
+    outtextxy(205, 508, "速度");
+    outtextxy(270, 508, "状态");
+
+    for(i=1;i<=MAX_TRAIN_AMOUNT;i++)
+    {
+        if(trainList.train[i]!=NULL)
+        {
+            setcolor(EGERGB(0, 0, 0));
+            setfontbkcolor(EGERGB(164, 164, 164));
+            strcpy(str,"Train  ");
+            str[6] = i+'0';
+            outtextxy(110, 538+(i-1)*30, str);
+
+            itoa(trainList.train[i]->spd, str, 10);
+            outtextxy(215, 538+(i-1)*30, str);
+
+            switch(trainList.train[i]->status)
+            {
+                case RUN:
+                   // setcolor(EGERGB(91, 184, 91));
+                    setfontbkcolor(EGERGB(91, 184, 91));
+                    outtextxy(270, 538+(i-1)*30, "运行");
+                    break;
+                case STOP:
+                    //setcolor(EGERGB(249, 168, 51));
+                    setfontbkcolor(EGERGB(249, 168, 51));
+                    outtextxy(270, 538+(i-1)*30, "停止");
+                    break;
+                case WAIT:
+                    //setcolor(EGERGB(69, 171, 201));
+                    setfontbkcolor(EGERGB(69, 171, 201));
+                    outtextxy(270, 538+(i-1)*30, "停靠");
+                    break;
+                case STATION:
+                    //setcolor(EGERGB(240, 240, 240));
+                    setfontbkcolor(EGERGB(240, 240, 240));
+                    outtextxy(270, 538+(i-1)*30, "等待");
+                    break;
+            }
+        }
+    }
+}
+
+void printCommonTrack()
+{
+    int i;
+    char str[20],num[20];
+    setfont(18, 0, "宋体");
+
+    setcolor(EGERGB(0, 0, 0));
+    setfontbkcolor(EGERGB(164, 164, 164));
+
+    outtextxy(650, 508, "状态");
+
+    for(i=1;i<=MAX_COMMON_TRACK_AMOUNT;i++)
+    {
+        if(commonTrackList.commonTrack[i]!=NULL)
+        {
+            setcolor(EGERGB(0, 0, 0));
+            setfontbkcolor(EGERGB(164, 164, 164));
+            strcpy(str,"公共轨道  ");
+            itoa(i,num,10);
+            strcat(str,num);
+            outtextxy(500, 538+(i-1)*50, str);
+
+            switch(commonTrackList.commonTrack[i]->status)
+            {
+                case FREE:
+                   // setcolor(EGERGB(91, 184, 91));
+                    setfontbkcolor(EGERGB(69, 171, 201));
+                    outtextxy(650, 538+(i-1)*50, "空闲");
+                    break;
+                default:
+                    //setcolor(EGERGB(249, 168, 51));
+                    setfontbkcolor(EGERGB(249, 168, 51));
+                    outtextxy(650, 538+(i-1)*50, "占用");
+                    break;
+            }
+        }
+    }
 }
