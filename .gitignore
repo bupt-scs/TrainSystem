@@ -1,0 +1,3 @@
+train/bin/Release/train.exe
+*.o
+train/train.layout
