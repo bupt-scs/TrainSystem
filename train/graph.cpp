@@ -102,7 +102,7 @@ void drawobj(AniObj* obj)
 DWORD WINAPI printGraph(LPVOID pPararneter)
 {
 	AniObj obj[MAX_TRAIN_AMOUNT]; //定义对象数组
-	int i,j;
+	int i,trainID = 1;
 
 	for (i = 0; i < MAX_TRAIN_AMOUNT; i++)
 	{
@@ -131,9 +131,10 @@ DWORD WINAPI printGraph(LPVOID pPararneter)
         }
 
 		cleardevice();
+
 		putimage(0,0,backGround);
 
-        insByMouse(msg);
+        insByMouse(msg,&trainID);//右侧按钮面板
 
         for (i = 0; i < MAX_TRAIN_AMOUNT; i++)
         {
@@ -148,12 +149,11 @@ DWORD WINAPI printGraph(LPVOID pPararneter)
 	exit(180);
 }
 
-void insByMouse(mouse_msg msg)
+void insByMouse(mouse_msg msg,int *trainID)
 {
         //cleardevice();
         //  putimage(0,0,backGround);
         //ACC
-        int trainID = 1;
 
         button = newimage();
         getimage(button,"img/button/acc_0.png");
@@ -185,6 +185,59 @@ void insByMouse(mouse_msg msg)
         putimage(737,382,button);
         delimage(button);
 
+        setcolor(EGERGB(0, 0, 0));
+        setfontbkcolor(EGERGB(164, 164, 164));
+        setfont(25, 0, "宋体");
+        outtextxy(639, 100, "Train 1");
+        outtextxy(639, 145, "Train 2");
+        outtextxy(639, 190, "Train 3");
+
+        setcolor(EGERGB(255, 236, 77));
+
+        switch(*trainID)
+        {
+            case 1:outtextxy(639, 100, "Train 1");break;
+            case 2:outtextxy(639, 145, "Train 2");break;
+            case 3:outtextxy(639, 190, "Train 3");break;
+        }
+
+        if(msg.x>639&&msg.x<725&&msg.y>96&&msg.y<129)
+        {
+            if((int)msg.is_down()==0&& *trainID!=1)
+            {
+                setcolor(EGERGB(35, 248, 235));
+                outtextxy(639, 100, "Train 1");
+            }
+            else if((int)msg.is_down())
+            {
+                *trainID = 1;
+            }
+        }
+        else if(msg.x>639&&msg.x<725&&msg.y>141&&msg.y<174)
+        {
+            if((int)msg.is_down()==0&& *trainID!=2)
+            {
+                setcolor(EGERGB(35, 248, 235));
+                outtextxy(639, 145, "Train 2");
+            }
+            else if((int)msg.is_down())
+            {
+                *trainID = 2;
+            }
+        }
+        else if(msg.x>639&&msg.x<725&&msg.y>186&&msg.y<219)
+        {
+            if((int)msg.is_down()==0&& *trainID!=3)
+            {
+                setcolor(EGERGB(35, 248, 235));
+                outtextxy(639, 190, "Train 3");
+            }
+            else if((int)msg.is_down())
+            {
+                *trainID = 3;
+            }
+        }
+
         if(msg.x>636&&msg.x<717&&msg.y>262&&msg.y<312)
         {
             if((int)msg.is_down()==0)
@@ -201,7 +254,7 @@ void insByMouse(mouse_msg msg)
                 putimage(636,262,button);
                 delimage(button);
 
-                inputIns.trainID = trainID;
+                inputIns.trainID = *trainID;
                 inputIns.ins = ACC;
             }
         }
@@ -221,7 +274,7 @@ void insByMouse(mouse_msg msg)
                 putimage(737,262,button);
                 delimage(button);
 
-                inputIns.trainID = trainID;
+                inputIns.trainID = *trainID;
                 inputIns.ins = BRK;
             }
         }//第二行
@@ -241,7 +294,7 @@ void insByMouse(mouse_msg msg)
                 putimage(636,322,button);
                 delimage(button);
 
-                trainList.train[trainID]->spd ++;
+                trainList.train[*trainID]->spd ++;
             }
         }
         else if(msg.x>737&&msg.x<817&&msg.y>322&&msg.y<372)
@@ -260,7 +313,7 @@ void insByMouse(mouse_msg msg)
                 putimage(737,322,button);
                 delimage(button);
 
-                trainList.train[trainID]->spd --;
+                trainList.train[*trainID]->spd --;
             }
         }//第三行
         else if(msg.x>636&&msg.x<717&&msg.y>382&&msg.y<432)
@@ -279,7 +332,7 @@ void insByMouse(mouse_msg msg)
                 putimage(636,382,button);
                 delimage(button);
 
-                inputIns.trainID = trainID;
+                inputIns.trainID = *trainID;
                 inputIns.ins = DOCK;
             }
         }
