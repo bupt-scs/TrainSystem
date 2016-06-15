@@ -104,6 +104,7 @@ void dataInit()
 		fgets(s,1000,fptr);
 
 		trainList.train[ID]->status = STOP;
+		trainList.train[ID]->defaultDockTime = (clock_t)3000;
 	}
     fclose(fptr);
 //----------------------------------单一轨道部分---------------------------
