@@ -1,14 +1,16 @@
 # depslib dependency file v1.0
 1464465748 source:c:\users\alex yu\onedrive\code\c作业\train\trainsystem\train\enum.c
 
-1465138239 c:\users\alex yu\onedrive\code\c作业\train\trainsystem\train\train.h
-	<stdio.h>
-	<math.h>
+1465980760 c:\users\alex yu\onedrive\code\c作业\train\trainsystem\train\train.h
+	<cstdio>
+	<cmath>
 	<string.h>
+	<string>
 	<process.h>
 	<time.h>
 	<stdlib.h>
 	<windows.h>
+	<graphics.h>
 
 1465141747 source:c:\users\alex yu\onedrive\code\c作业\train\trainsystem\train\io.c
 	"Train.h"
@@ -132,6 +134,39 @@
 	"global.h"
 
 1465980835 source:c:\code\bighomework\trainsystem\train\graph.cpp
+	"Train.h"
+	"global.h"
+
+1465980760 source:c:\users\alex yu\onedrive\code\c作业\train\trainsystem\train\debug_standaloneio.cpp
+	"Train.h"
+	"global.h"
+
+1465980760 c:\users\alex yu\onedrive\code\c作业\train\trainsystem\train\global.h
+	"Train.h"
+
+1465980760 source:c:\users\alex yu\onedrive\code\c作业\train\trainsystem\train\enum.cpp
+	"global.h"
+
+1465980760 source:c:\users\alex yu\onedrive\code\c作业\train\trainsystem\train\freelists.cpp
+	"Train.h"
+	"global.h"
+
+1465980760 source:c:\users\alex yu\onedrive\code\c作业\train\trainsystem\train\global.cpp
+	"global.h"
+
+1465980760 source:c:\users\alex yu\onedrive\code\c作业\train\trainsystem\train\graph.cpp
+	"Train.h"
+	"global.h"
+
+1465980760 source:c:\users\alex yu\onedrive\code\c作业\train\trainsystem\train\io.cpp
+	"Train.h"
+	"global.h"
+
+1465980760 source:c:\users\alex yu\onedrive\code\c作业\train\trainsystem\train\main.cpp
+	"Train.h"
+	"global.h"
+
+1465982011 source:c:\users\alex yu\onedrive\code\c作业\train\trainsystem\train\move.cpp
 	"Train.h"
 	"global.h"
 

@@ -194,7 +194,7 @@ void judgeCommonTrack(CommonTrack* cT,Train* enter[],int ei,clock_t curTime){
         fprintf(log," 在公共轨道%d入口处等待调度\n",cT->ID);
 
     switch(CTSTG){
-                    case ASK:
+                    case ASK:{
                         //showTrain();
                         printf("输入准许进入的列车ID：");
                         int idin; fflush(stdin);scanf("%d",&idin);
@@ -202,9 +202,15 @@ void judgeCommonTrack(CommonTrack* cT,Train* enter[],int ei,clock_t curTime){
                         fprintf(log,"列车 ID %d 受授权进入公共轨道，其他列车停车等待\n",idin);
                         //fLog(0,"Log.txt",idin,"用户准入公共轨道。其他列车停车等待。",curTime);
                         for(;ei>=0;ei--)
-                            if(enter[ei]->ID!=idin) {enter[ei]->status=WAIT; trainWaiting[cT->ID]=enter[ei];}
+                            if(enter[ei]->ID!=idin) {
+                                enter[ei]->status=WAIT;
+                                trainWaiting[cT->ID]=enter[ei];
+                            }
                             else enter[ei]->status=RUN;
+                            cT->status=BUSY;
                         break;
+                    }
+
                     case FFI:{
                         Train* tin=abs(enter[0]->spd)>abs(enter[1]->spd)?enter[0]:enter[1];
                         printf("列车 ID %d 速度更快，优先进入公共轨道，其他列车停车等待\n",tin->ID);
@@ -213,7 +219,10 @@ void judgeCommonTrack(CommonTrack* cT,Train* enter[],int ei,clock_t curTime){
                         for(;ei>=0;ei--)
                             enter[ei]->status=WAIT;
                         tin->status=RUN;
-                        break;}
+                        cT->status=BUSY;
+                        break;
+                    }
+
                     case RAD:{
                         int ridin=enter[curTime/233%2]->ID;
                         printf("列车 ID %d 被随机选中进入公共轨道，其他列车停车等待\n",ridin);
@@ -222,7 +231,9 @@ void judgeCommonTrack(CommonTrack* cT,Train* enter[],int ei,clock_t curTime){
                         for(;ei>=0;ei--)
                             if(enter[ei]->ID!=ridin) enter[ei]->status=WAIT;
                             else enter[ei]->status=RUN;
-                        break;}
+                        cT->status=BUSY;
+                        break;
+                    }
     }
     fclose(log);
 }
@@ -405,7 +416,7 @@ for(id1 = 0;i1&&id1<MAX_TRAIN_AMOUNT;id1++)     //遍历火车
 void moveAllTrain(clock_t curTime,clock_t frameDur)
 {
     int i;
-    //fLog(1,"Log.txt",-1,"",curTime);//每帧运行日志
+    fLog(1,"Log.txt",-1,"",curTime);//每帧运行日志
 	for(i=0;i<MAX_TRAIN_AMOUNT;i++)
 		trainIns[i]=HOLD;
 	userIns(curTime,frameDur);
