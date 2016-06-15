@@ -379,7 +379,7 @@ for(id1 = 0;i1&&id1<MAX_TRAIN_AMOUNT;id1++)     //遍历火车
         i1--;
         Train* t1 = trainList.train[id1];
         if(t1->status == RUN)  //找出正在运行的火车
-            for(id2 = 0;i2&&id2<MAX_TRAIN_AMOUNT;id2++)  //再次遍历火车= =
+            for(id2 = 0, i2 = trainList.amount;i2&&id2<MAX_TRAIN_AMOUNT;id2++)  //再次遍历火车= =
                 if(trainList.train[id2] != NULL){
                     i2--;
                     if(id2 != id1){
@@ -388,17 +388,18 @@ for(id1 = 0;i1&&id1<MAX_TRAIN_AMOUNT;id1++)     //遍历火车
                             x1 = (int64)t2->pos - (int64)t1->pos;     //初距离
                             x2 = (int64)t2->pos + t2->spd * frameDur - (int64)t1->pos - t1->spd * frameDur;//单位时间后距离
                             if(t2->status == WAIT || t2->status == STOP)
-                                if(abs(x1 * x2) != x1 * x2) {
+                                if(abs(x1 * x2) != x1 * x2 || x2 == 0) {
                                     trainIns[t1->ID] = BRK;
                                     printf("列车ID %d 前方有静止列车 ID %d，制动。\n",t1->ID,t2->ID);
                                     fLog(0,"Log.txt",t1->ID,"前方有静止车辆",curTime);
                                 }
-                            if(t2->status == RUN)
-                                if(abs(x1 * x2) != x1 * x2)
+                            if(t2->status == RUN || t2->status == STATION)
+                                if(abs(x1 * x2) != x1 * x2 || x2 ==0)
                                     if(abs(t1->spd * t2->spd) != t1->spd * t2->spd){     //迎面相撞
                                         printf("列车ID %d 和 %d 将迎面相遇，两车制动。\n",t1->ID,t2->ID);
-                                        fLog(0,"Log.txt",t1->ID,"将与他车迎面相遇",curTime);
-                                        fLog(0,"Log.txt",t2->ID,"将与他车迎面相遇",curTime);
+                                        FILE* log=fopen("Log.txt","a");fprintf(log,"\n[%d ms] ",curTime);
+                                            fprintf(log,"列车ID %d 和 %d 将迎面相遇，两车制动。\n",t1->ID,t2->ID);
+                                        fclose(log);
                                         trainIns[t1->ID] = BRK; trainIns[t2->ID] = BRK;     //两车均制动
                                     }
                                     else{ //追尾
@@ -416,7 +417,7 @@ for(id1 = 0;i1&&id1<MAX_TRAIN_AMOUNT;id1++)     //遍历火车
 void moveAllTrain(clock_t curTime,clock_t frameDur)
 {
     int i;
-    fLog(1,"Log.txt",-1,"",curTime);//每帧运行日志
+    //fLog(1,"Log.txt",-1,"",curTime);//每帧运行日志
 	for(i=0;i<MAX_TRAIN_AMOUNT;i++)
 		trainIns[i]=HOLD;
 	userIns(curTime,frameDur);
