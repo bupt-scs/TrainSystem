@@ -112,8 +112,16 @@ DWORD WINAPI printGraph(LPVOID pPararneter)
         }
 	}
 
+    mouse_msg msg = {0};
+
 	for ( ; is_run(); delay_fps(60) )
 	{
+        while (mousemsg())
+		{
+			msg = getmouse();
+		}
+
+	    //WaitForSingleObject(hMutex,INFINITE);
         for (i = 0; i < MAX_TRAIN_AMOUNT; i++)
         {
             if(trainList.train[i]!=NULL)
@@ -125,6 +133,8 @@ DWORD WINAPI printGraph(LPVOID pPararneter)
 		cleardevice();
 		putimage(0,0,backGround);
 
+        insByMouse(msg);
+
         for (i = 0; i < MAX_TRAIN_AMOUNT; i++)
         {
             if(trainList.train[i]!=NULL)
@@ -132,74 +142,145 @@ DWORD WINAPI printGraph(LPVOID pPararneter)
                 drawobj(&obj[i]);
             }
         }
+        //ReleaseMutex(hMutex);
 	}
 	closegraph();
+	exit(180);
 }
 
-DWORD WINAPI insByMouse(LPVOID pPararneter)
+void insByMouse(mouse_msg msg)
 {
-	setfont(18, 0, "宋体");
-
-	mouse_msg msg = {0};
-	for ( ; is_run(); delay_fps(60))
-	{
-		//获取鼠标消息，这个函数会等待，等待到有消息为止
-		//类似地，有和kbhit功能相近的函数MouseHit，用于检测有没有鼠标消息
-		while (mousemsg())
-		{
-			msg = getmouse();
-		}
-        cleardevice();
-		//格式化输出为字符串，用于后面输出
-		//msg和flag常数请参考文档或者mouse_msg_e, mouse_flag_e的声明
-        putimage(0,0,backGround);
-
-        PIMAGE button;
+        //cleardevice();
+        //  putimage(0,0,backGround);
+        //ACC
         button = newimage();
-
         getimage(button,"img/button/acc_0.png");
-        putimage(636,212,button);
+        putimage(636,262,button);
+        delimage(button);
+        //BRK
+        button = newimage();
         getimage(button,"img/button/brk_0.png");
-        putimage(737,212,button);
+        putimage(737,262,button);
+        delimage(button);
+        //SPDUP
+        button = newimage();
         getimage(button,"img/button/spdup_0.png");
-        putimage(636,272,button);
+        putimage(636,322,button);
+        delimage(button);
+        //SPDDOWN
+        button = newimage();
         getimage(button,"img/button/spddown_0.png");
-        putimage(737,272,button);
+        putimage(737,322,button);
+        delimage(button);
+        //PAUSE
+        button = newimage();
         getimage(button,"img/button/sta_0.png");
-        putimage(636,332,button);
+        putimage(636,382,button);
+        delimage(button);
+        //QUIT
+        button = newimage();
         getimage(button,"img/button/quit_0.png");
-        putimage(737,332,button);
+        putimage(737,382,button);
+        delimage(button);
 
-        if(msg.x>636&&msg.x<717&&msg.y>312&&msg.y<362)
+        if(msg.x>636&&msg.x<717&&msg.y>262&&msg.y<312)
         {
-            if((int)msg.is_down()!=0)
+            if((int)msg.is_down()==0)
             {
+                button = newimage();
                 getimage(button,"img/button/acc_1.png");
-                putimage(636,312,button);
+                putimage(636,262,button);
+                delimage(button);
             }
-        }
-        else if(msg.x>737&&msg.x<817&&msg.y>312&&msg.y<362)
-        {
-            if((int)msg.is_down()!=0)
+            else
             {
-                getimage(button,"img/button/brk_1.png");
-                putimage(737,312,button);
+                button = newimage();
+                getimage(button,"img/button/acc_2.png");
+                putimage(636,262,button);
+                delimage(button);
             }
         }
-
-		xyprintf(0, 0, "x = %10d  y = %10d",
-			msg.x, msg.y, msg.wheel);
-		xyprintf(0, 20, "move  = %d down  = %d up    = %d",
-			(int)msg.is_move(),
-			(int)msg.is_down(),
-			(int)msg.is_up());
-		xyprintf(0, 40, "left  = %d mid   = %d right = %d",
-			(int)msg.is_left(),
-			(int)msg.is_mid(),
-			(int)msg.is_right());
-		xyprintf(0, 60, "wheel = %d  wheel rotate = %d",
-			(int)msg.is_wheel(),
-			msg.wheel);
-	}
-	closegraph();
+        else if(msg.x>737&&msg.x<817&&msg.y>262&&msg.y<312)
+        {
+            if((int)msg.is_down()==0)
+            {
+                button = newimage();
+                getimage(button,"img/button/brk_1.png");
+                putimage(737,262,button);
+                delimage(button);
+            }
+            else
+            {
+                button = newimage();
+                getimage(button,"img/button/brk_2.png");
+                putimage(737,262,button);
+                delimage(button);
+            }
+        }
+        else if(msg.x>636&&msg.x<717&&msg.y>322&&msg.y<372)
+        {
+            if((int)msg.is_down()==0)
+            {
+                button = newimage();
+                getimage(button,"img/button/spdup_1.png");
+                putimage(636,322,button);
+                delimage(button);
+            }
+            else
+            {
+                button = newimage();
+                getimage(button,"img/button/spdup_2.png");
+                putimage(636,322,button);
+                delimage(button);
+            }
+        }
+        else if(msg.x>737&&msg.x<817&&msg.y>322&&msg.y<372)
+        {
+            if((int)msg.is_down()==0)
+            {
+                button = newimage();
+                getimage(button,"img/button/spddown_1.png");
+                putimage(737,322,button);
+                delimage(button);
+            }
+            else
+            {
+                button = newimage();
+                getimage(button,"img/button/spddown_2.png");
+                putimage(737,322,button);
+                delimage(button);
+            }
+        }//第三行
+        else if(msg.x>636&&msg.x<717&&msg.y>382&&msg.y<432)
+        {
+            if((int)msg.is_down()==0)
+            {
+                button = newimage();
+                getimage(button,"img/button/sta_1.png");
+                putimage(636,382,button);
+                delimage(button);
+            }
+            else
+            {
+                button = newimage();
+                getimage(button,"img/button/sta_2.png");
+                putimage(636,382,button);
+                delimage(button);
+            }
+        }
+        else if(msg.x>737&&msg.x<817&&msg.y>382&&msg.y<432)
+        {
+            if((int)msg.is_down()==0)
+            {
+                button = newimage();
+                getimage(button,"img/button/quit_1.png");
+                putimage(737,382,button);
+                delimage(button);
+            }
+            else
+            {
+                exit(100);
+            }
+        }
+   //     ReleaseMutex(hMutex);
 }

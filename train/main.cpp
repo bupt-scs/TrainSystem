@@ -32,7 +32,8 @@ int main(void)
     getimage(backGround,"img/background.png");
     trainPic = newimage();
     getimage(trainPic,"img/train.png");
-
+    button = newimage();
+    getimage(button,"img/button/acc_0.png");
     //鼠标监视线程
     HANDLE hThread1;
     //图形输出线程
@@ -40,10 +41,8 @@ int main(void)
 
 	hMutex=CreateMutex(NULL,FALSE,NULL);
 
-//	hThread1=CreateThread(NULL,0,printGraph,NULL ,0,NULL);
-//	CloseHandle(hThread1);
-	hThread2=CreateThread(NULL,0,insByMouse,NULL ,0,NULL);
-	CloseHandle(hThread2);
+	hThread1=CreateThread(NULL,0,printGraph,NULL ,0,NULL);
+	CloseHandle(hThread1);
 
     startTime = clock();
 	while(1)

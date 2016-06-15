@@ -188,8 +188,6 @@ struct AniObj
 	float x, y;
 };
 
-
-void insByMouse(void);
+void insByMouse(mouse_msg msg);
 DWORD WINAPI printGraph(LPVOID pPararneter);
-DWORD WINAPI insByMouse(LPVOID pPararneter);
 #endif

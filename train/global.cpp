@@ -17,3 +17,4 @@ Ins trainIns[MAX_TRAIN_AMOUNT];//÷∏¡Ó¡–±Ì
 
 PIMAGE backGround;
 PIMAGE trainPic;
+PIMAGE button;

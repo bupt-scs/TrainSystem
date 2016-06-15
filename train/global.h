@@ -18,4 +18,5 @@ extern Ins trainIns[MAX_TRAIN_AMOUNT];//÷∏¡Ó¡–±Ì
 
 extern PIMAGE backGround;
 extern PIMAGE trainPic;
+extern PIMAGE button;
 #endif
