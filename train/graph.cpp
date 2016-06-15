@@ -34,7 +34,7 @@ void posToGraph(AniObj* obj)
         case 2:
             if(trainList.train[obj->trainID]->pos>=0&&trainList.train[obj->trainID]->pos<6000)
             {
-                obj->x = 492-(double)trainList.train[obj->trainID]->pos/6000*(492-185);
+                obj->x = 495-(double)trainList.train[obj->trainID]->pos/6000*(495-185);
                 obj->y = 220;
                 obj->dir = 0;
             }
@@ -46,13 +46,13 @@ void posToGraph(AniObj* obj)
             }
             else if(trainList.train[obj->trainID]->pos>=8000&&trainList.train[obj->trainID]->pos<14000)
             {
-                obj->x = 185 + (double)(trainList.train[obj->trainID]->pos-8000)/6000*(492-185);
+                obj->x = 185 + (double)(trainList.train[obj->trainID]->pos-8000)/6000*(495-185);
                 obj->y = 133;
                 obj->dir = 0;
             }
             else if(trainList.train[obj->trainID]->pos>=14000&&trainList.train[obj->trainID]->pos<16000)
             {
-                obj->x = 492;
+                obj->x = 495;
                 obj->y = 133 + (double)(trainList.train[obj->trainID]->pos-14000)/2000*(220-133);
                 obj->dir = 1;
             }
@@ -61,7 +61,7 @@ void posToGraph(AniObj* obj)
             if(trainList.train[obj->trainID]->pos>=0&&trainList.train[obj->trainID]->pos<4000)
             {
                 obj->x = 240;
-                obj->y = 417 - (double)trainList.train[obj->trainID]->pos/4000*(417-220);
+                obj->y = 418 - (double)trainList.train[obj->trainID]->pos/4000*(418-220);
                 obj->dir = 1;
             }
             else if(trainList.train[obj->trainID]->pos>=4000&&trainList.train[obj->trainID]->pos<8000)
@@ -73,19 +73,17 @@ void posToGraph(AniObj* obj)
             else if(trainList.train[obj->trainID]->pos>=8000&&trainList.train[obj->trainID]->pos<12000)
             {
                 obj->x = 438;
-                obj->y = 220 + (double)(trainList.train[obj->trainID]->pos-8000)/4000*(417-220);
+                obj->y = 220 + (double)(trainList.train[obj->trainID]->pos-8000)/4000*(418-220);
                 obj->dir = 1;
             }
             else if(trainList.train[obj->trainID]->pos>=12000&&trainList.train[obj->trainID]->pos<16000)
             {
                 obj->x = 438 - (double)(trainList.train[obj->trainID]->pos-12000)/4000*(438-240);
-                obj->y = 417;
+                obj->y = 418;
                 obj->dir = 0;
             }
             break;
-
     }
-
 }
 
 //初始化
@@ -151,12 +149,44 @@ DWORD WINAPI insByMouse(LPVOID pPararneter)
 		{
 			msg = getmouse();
 		}
-
+        cleardevice();
 		//格式化输出为字符串，用于后面输出
 		//msg和flag常数请参考文档或者mouse_msg_e, mouse_flag_e的声明
-
-		cleardevice();
         putimage(0,0,backGround);
+
+        PIMAGE button;
+        button = newimage();
+
+        getimage(button,"img/button/acc_0.png");
+        putimage(636,212,button);
+        getimage(button,"img/button/brk_0.png");
+        putimage(737,212,button);
+        getimage(button,"img/button/spdup_0.png");
+        putimage(636,272,button);
+        getimage(button,"img/button/spddown_0.png");
+        putimage(737,272,button);
+        getimage(button,"img/button/sta_0.png");
+        putimage(636,332,button);
+        getimage(button,"img/button/quit_0.png");
+        putimage(737,332,button);
+
+        if(msg.x>636&&msg.x<717&&msg.y>312&&msg.y<362)
+        {
+            if((int)msg.is_down()!=0)
+            {
+                getimage(button,"img/button/acc_1.png");
+                putimage(636,312,button);
+            }
+        }
+        else if(msg.x>737&&msg.x<817&&msg.y>312&&msg.y<362)
+        {
+            if((int)msg.is_down()!=0)
+            {
+                getimage(button,"img/button/brk_1.png");
+                putimage(737,312,button);
+            }
+        }
+
 		xyprintf(0, 0, "x = %10d  y = %10d",
 			msg.x, msg.y, msg.wheel);
 		xyprintf(0, 20, "move  = %d down  = %d up    = %d",

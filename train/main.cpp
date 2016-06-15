@@ -40,10 +40,10 @@ int main(void)
 
 	hMutex=CreateMutex(NULL,FALSE,NULL);
 
-	hThread1=CreateThread(NULL,0,printGraph,NULL ,0,NULL);
-	CloseHandle(hThread1);
-//	hThread2=CreateThread(NULL,0,insByMouse,NULL ,0,NULL);
-//	CloseHandle(hThread2);
+//	hThread1=CreateThread(NULL,0,printGraph,NULL ,0,NULL);
+//	CloseHandle(hThread1);
+	hThread2=CreateThread(NULL,0,insByMouse,NULL ,0,NULL);
+	CloseHandle(hThread2);
 
     startTime = clock();
 	while(1)
