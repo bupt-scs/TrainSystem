@@ -36,14 +36,14 @@
 				<Linker>
 					<Add option="-s" />
 					<Add option="-mwindows" />
-					<Add library="E:/Program Files (x86)/Codeblocks/MinGW/lib/libgraphics.a" />
-					<Add library="E:/Program Files (x86)/Codeblocks/MinGW/lib/libgdi32.a" />
-					<Add library="E:/Program Files (x86)/Codeblocks/MinGW/lib/libimm32.a" />
-					<Add library="E:/Program Files (x86)/Codeblocks/MinGW/lib/libmsimg32.a" />
-					<Add library="E:/Program Files (x86)/Codeblocks/MinGW/lib/libole32.a" />
-					<Add library="E:/Program Files (x86)/Codeblocks/MinGW/lib/liboleaut32.a" />
-					<Add library="E:/Program Files (x86)/Codeblocks/MinGW/lib/libwinmm.a" />
-					<Add library="E:/Program Files (x86)/Codeblocks/MinGW/lib/libuuid.a" />
+					<Add library="C:/tools/Codeblocks/MinGW/lib/libgraphics.a" />
+					<Add library="C:/tools/Codeblocks/MinGW/lib/libgdi32.a" />
+					<Add library="C:/tools/Codeblocks/MinGW/lib/libimm32.a" />
+					<Add library="C:/tools/Codeblocks/MinGW/lib/libmsimg32.a" />
+					<Add library="C:/tools/Codeblocks/MinGW/lib/libole32.a" />
+					<Add library="C:/tools/Codeblocks/MinGW/lib/liboleaut32.a" />
+					<Add library="C:/tools/Codeblocks/MinGW/lib/libwinmm.a" />
+					<Add library="C:/tools/Codeblocks/MinGW/lib/libuuid.a" />
 				</Linker>
 			</Target>
 		</Build>
