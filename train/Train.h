@@ -8,7 +8,7 @@
 #include <string>
 #include <process.h>
 #include <time.h>
-#include <stdlib.h>
+#include <cstdlib>
 #include <windows.h>
 #include <graphics.h>
 
@@ -59,7 +59,8 @@ typedef enum{
 typedef enum{
 	FFI,	//快先
 	ASK,	//询问
-	RAD	    //随机
+	RAD,    //随机
+	JT      //交替
 }STG;
 
 typedef struct{
@@ -71,17 +72,6 @@ typedef struct{
 } Track;
 
 typedef struct{
-	int ID; //在commonTrackList.commonTrack[]里的下标
-	int track1;
-	int track2;//两轨之ID
-	unsigned long track1in;
-	unsigned long track2in;
-	unsigned long track1out;
-	unsigned long track2out;
-    CommonTrackState status;
-} CommonTrack;
-
-typedef struct{
 	int ID;					//在trainList.train[]里的下标
 	int trackID; 			//所在轨道ID
 	unsigned long pos; 		//在轨道上的坐标
@@ -90,6 +80,18 @@ typedef struct{
 	long defaultDockTime;
 	TrainState status;
 }Train;
+
+typedef struct{
+	int ID; //在commonTrackList.commonTrack[]里的下标
+	int track1;
+	int track2;//两轨之ID
+	unsigned long track1in;
+	unsigned long track2in;
+	unsigned long track1out;
+	unsigned long track2out;
+    CommonTrackState status;
+    Train* lastUser;//上次准入的火车
+} CommonTrack;
 
 typedef struct TrackList_name{
 	int amount;

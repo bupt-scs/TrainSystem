@@ -244,8 +244,8 @@ void dataInit()
         case '3':case '6': CTSTG=RAD;printf("随机策略已选择\n");break;
     }
 */
-    CTW=0;
-    CTSTG=FFI;
+    CTW=1;
+    CTSTG=JT;
 }
 
 void showTrain()

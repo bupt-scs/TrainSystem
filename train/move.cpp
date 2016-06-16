@@ -175,7 +175,7 @@ void moveTrain(Train* train,Ins ins,clock_t curTime,clock_t frameDur)
 }
 
 void judgeCommonTrack(CommonTrack* cT,Train* enter[],int ei,clock_t curTime){
-    int ii;
+    int ii=0;
 
     printf("\n时间：%.3f s:列车",
            curTime/(double)CLOCKS_PER_SEC);
@@ -204,10 +204,10 @@ void judgeCommonTrack(CommonTrack* cT,Train* enter[],int ei,clock_t curTime){
                         for(;ei>=0;ei--)
                             if(enter[ei]->ID!=idin) {
                                 enter[ei]->status=WAIT;
-                                trainWaiting[cT->ID]=enter[ei];
                             }
                             else enter[ei]->status=RUN;
                             cT->status=BUSY;
+                            cT->lastUser=trainList.train[idin];
                         break;
                     }
 
@@ -220,6 +220,7 @@ void judgeCommonTrack(CommonTrack* cT,Train* enter[],int ei,clock_t curTime){
                             enter[ei]->status=WAIT;
                         tin->status=RUN;
                         cT->status=BUSY;
+                        cT->lastUser=tin;
                         break;
                     }
 
@@ -232,6 +233,34 @@ void judgeCommonTrack(CommonTrack* cT,Train* enter[],int ei,clock_t curTime){
                             if(enter[ei]->ID!=ridin) enter[ei]->status=WAIT;
                             else enter[ei]->status=RUN;
                         cT->status=BUSY;
+                        cT->lastUser=trainList.train[ridin];
+                        break;
+                    }
+
+                    case JT:{
+                        if(cT->lastUser==NULL){
+                            int ridin=enter[curTime/233%2]->ID;
+                            printf("列车 ID %d 被随机选中进入公共轨道，其他列车停车等待\n",ridin);
+                            fprintf(log,"列车 ID %d 被随机选中进入公共轨道，其他列车停车等待\n",ridin);
+                            //fLog(0,"Log.txt",ridin,"被随机选中进入公共轨道。其他列车停车等待",curTime);
+                            for(;ei>=0;ei--)
+                                if(enter[ei]->ID!=ridin) enter[ei]->status=WAIT;
+                                else enter[ei]->status=RUN;
+                            cT->status=BUSY;
+                            cT->lastUser=trainList.train[ridin];
+                            break;
+                        }
+                        int idin=0;
+                        for(int j=0;j<=ei;j++)
+                            if(enter[j]!=cT->lastUser)
+                                idin=enter[j]->ID;
+                        for(;ei>=0;ei--)
+                            if(enter[ei]->ID!=idin) {
+                                enter[ei]->status=WAIT;
+                            }
+                            else enter[ei]->status=RUN;
+                            cT->status=BUSY;
+                            cT->lastUser=trainList.train[idin];
                         break;
                     }
     }
@@ -274,7 +303,7 @@ void dealCommonTrack(CommonTrack* cT,Ins ins[],clock_t curTime,clock_t frameDur)
 		if(trainList.train[id]!=NULL){
 			i--;
 			Train* t=trainList.train[id];
-			if(t->status==RUN){
+			if(t->status==RUN || t->status==STATION){
 				unsigned long cp=t->pos;
 				unsigned long np=cp+(t->spd)*frameDur;
 				if(t->trackID==cT->track1){
@@ -378,7 +407,7 @@ for(id1 = 0;i1&&id1<MAX_TRAIN_AMOUNT;id1++)     //遍历火车
     if(trainList.train[id1] != NULL){
         i1--;
         Train* t1 = trainList.train[id1];
-        if(t1->status == RUN)  //找出正在运行的火车
+        if(t1->status == RUN || STATION)  //找出正在运行的火车
             for(id2=0,i2=trainList.amount;i2&&id2<MAX_TRAIN_AMOUNT;id2++)  //再次遍历火车= =
                 if(trainList.train[id2] != NULL){
                     i2--;
