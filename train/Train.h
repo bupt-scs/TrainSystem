@@ -8,7 +8,7 @@
 #include <string>
 #include <process.h>
 #include <time.h>
-#include <stdlib.h>
+#include <cstdlib>
 #include <windows.h>
 #include <graphics.h>
 

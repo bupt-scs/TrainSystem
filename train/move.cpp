@@ -274,7 +274,7 @@ void dealCommonTrack(CommonTrack* cT,Ins ins[],clock_t curTime,clock_t frameDur)
 		if(trainList.train[id]!=NULL){
 			i--;
 			Train* t=trainList.train[id];
-			if(t->status==RUN){
+			if(t->status==RUN || t->status==STATION){
 				unsigned long cp=t->pos;
 				unsigned long np=cp+(t->spd)*frameDur;
 				if(t->trackID==cT->track1){
@@ -378,7 +378,7 @@ for(id1 = 0;i1&&id1<MAX_TRAIN_AMOUNT;id1++)     //遍历火车
     if(trainList.train[id1] != NULL){
         i1--;
         Train* t1 = trainList.train[id1];
-        if(t1->status == RUN)  //找出正在运行的火车
+        if(t1->status == RUN || STATION)  //找出正在运行的火车
             for(id2=0,i2=trainList.amount;i2&&id2<MAX_TRAIN_AMOUNT;id2++)  //再次遍历火车= =
                 if(trainList.train[id2] != NULL){
                     i2--;

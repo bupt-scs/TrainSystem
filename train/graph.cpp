@@ -380,7 +380,8 @@ void printTrain()
             str[6] = i+'0';
             outtextxy(110, 538+(i-1)*30, str);
 
-            itoa(trainList.train[i]->spd, str, 10);
+            //itoa(trainList.train[i]->spd, str, 10);
+            sprintf(str,"%d",trainList.train[i]->spd);
             outtextxy(215, 538+(i-1)*30, str);
 
             switch(trainList.train[i]->status)
@@ -398,13 +399,18 @@ void printTrain()
                 case WAIT:
                     //setcolor(EGERGB(69, 171, 201));
                     setfontbkcolor(EGERGB(69, 171, 201));
-                    outtextxy(270, 538+(i-1)*30, "停靠");
-                    break;
-                case STATION:
-                    //setcolor(EGERGB(240, 240, 240));
-                    setfontbkcolor(EGERGB(240, 240, 240));
                     outtextxy(270, 538+(i-1)*30, "等待");
                     break;
+                case STATION:{
+                    //setcolor(EGERGB(240, 240, 240));
+                    setfontbkcolor(EGERGB(240, 240, 240));
+                    outtextxy(270, 538+(i-1)*30, "停靠");
+                    char s[100];
+                    sprintf(s,"剩余时间 %.1f s",
+                            trainList.train[i]->dockTime/(double)1000);
+                    outtextxy(320, 538+(i-1)*30,s);
+                    break;
+                }
             }
         }
     }
@@ -428,7 +434,8 @@ void printCommonTrack()
             setcolor(EGERGB(0, 0, 0));
             setfontbkcolor(EGERGB(164, 164, 164));
             strcpy(str,"公共轨道  ");
-            itoa(i,num,10);
+            //itoa(i,num,10);
+            sprintf(num,"%d",i);
             strcat(str,num);
             outtextxy(500, 538+(i-1)*50, str);
 

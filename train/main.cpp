@@ -25,7 +25,7 @@ int main(void)
         for(i=0;i<MAX_COMMON_TRACK_AMOUNT;i++)
             trainWaiting[i]=NULL;
 
-    setinitmode(INIT_ANIMATION);
+    setinitmode(INIT_RENDERMANUAL);
     initgraph(900,675);
 
     //»ñµÃ±³¾°Í¼Æ¬
