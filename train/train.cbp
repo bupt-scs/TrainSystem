@@ -35,7 +35,6 @@
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
-					<Add option="-mwindows" />
 					<Add library="C:/tools/Codeblocks/MinGW/lib/libgraphics.a" />
 					<Add library="C:/tools/Codeblocks/MinGW/lib/libgdi32.a" />
 					<Add library="C:/tools/Codeblocks/MinGW/lib/libimm32.a" />

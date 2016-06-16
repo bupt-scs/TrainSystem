@@ -23,14 +23,14 @@
 
 1465130661 source:c:\code\bighomework\trainsystem\train\enum.c
 
-1466011010 c:\code\bighomework\trainsystem\train\train.h
+1466097839 c:\code\bighomework\trainsystem\train\train.h
 	<cstdio>
 	<cmath>
 	<string.h>
 	<string>
 	<process.h>
 	<time.h>
-	<stdlib.h>
+	<cstdlib>
 	<windows.h>
 	<graphics.h>
 
@@ -105,15 +105,15 @@
 	"Train.h"
 	"global.h"
 
-1465991296 source:c:\code\bighomework\trainsystem\train\io.cpp
+1466098640 source:c:\code\bighomework\trainsystem\train\io.cpp
 	"Train.h"
 	"global.h"
 
-1466002812 source:c:\code\bighomework\trainsystem\train\main.cpp
+1466097839 source:c:\code\bighomework\trainsystem\train\main.cpp
 	"Train.h"
 	"global.h"
 
-1466011014 source:c:\code\bighomework\trainsystem\train\move.cpp
+1466097839 source:c:\code\bighomework\trainsystem\train\move.cpp
 	"Train.h"
 	"global.h"
 
@@ -133,7 +133,7 @@
 1465975988 source:c:\code\bighomework\trainsystem\train\global.cpp
 	"global.h"
 
-1466011010 source:c:\code\bighomework\trainsystem\train\graph.cpp
+1466098035 source:c:\code\bighomework\trainsystem\train\graph.cpp
 	"Train.h"
 	"global.h"
 
