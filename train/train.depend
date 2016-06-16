@@ -1,7 +1,7 @@
 # depslib dependency file v1.0
 1464465748 source:c:\users\alex yu\onedrive\code\c作业\train\trainsystem\train\enum.c
 
-1466081824 c:\users\alex yu\onedrive\code\c作业\train\trainsystem\train\train.h
+1466084314 c:\users\alex yu\onedrive\code\c作业\train\trainsystem\train\train.h
 	<cstdio>
 	<cmath>
 	<string.h>
@@ -158,15 +158,15 @@
 	"Train.h"
 	"global.h"
 
-1466081323 source:c:\users\alex yu\onedrive\code\c作业\train\trainsystem\train\io.cpp
+1466084284 source:c:\users\alex yu\onedrive\code\c作业\train\trainsystem\train\io.cpp
 	"Train.h"
 	"global.h"
 
-1466082231 source:c:\users\alex yu\onedrive\code\c作业\train\trainsystem\train\main.cpp
+1466083344 source:c:\users\alex yu\onedrive\code\c作业\train\trainsystem\train\main.cpp
 	"Train.h"
 	"global.h"
 
-1466081323 source:c:\users\alex yu\onedrive\code\c作业\train\trainsystem\train\move.cpp
+1466082407 source:c:\users\alex yu\onedrive\code\c作业\train\trainsystem\train\move.cpp
 	"Train.h"
 	"global.h"
 

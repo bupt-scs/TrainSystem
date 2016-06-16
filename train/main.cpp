@@ -1,7 +1,7 @@
 #include "Train.h"
 #include "global.h"
 
-#define FRAME_COUNT 10 //每这么多帧输出一下
+#define FRAME_COUNT 100 //每这么多帧输出一下
 
 using namespace std;
 
@@ -24,6 +24,11 @@ int main(void)
     if(CTW)
         for(i=0;i<MAX_COMMON_TRACK_AMOUNT;i++)
             trainWaiting[i]=NULL;
+
+    for(int i=0;i<MAX_COMMON_TRACK_AMOUNT;i++)//初始化公共轨道上次准入者
+        if(commonTrackList.commonTrack[i]!=NULL)
+            commonTrackList.commonTrack[i]->lastUser=NULL;
+
 
     setinitmode(INIT_RENDERMANUAL);
     initgraph(900,675);
