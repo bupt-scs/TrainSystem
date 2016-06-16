@@ -446,10 +446,17 @@ void printCommonTrack()
                     setfontbkcolor(EGERGB(69, 171, 201));
                     outtextxy(650, 538+(i-1)*50, "空闲");
                     break;
-                default:
-                    //setcolor(EGERGB(249, 168, 51));
-                    setfontbkcolor(EGERGB(249, 168, 51));
+
+                case BUSY:
+                   // setcolor(EGERGB(91, 184, 91));
+                    setfontbkcolor(EGERGB(255, 50, 50));
                     outtextxy(650, 538+(i-1)*50, "占用");
+                    break;
+
+                case ctWAIT:
+                   // setcolor(EGERGB(91, 184, 91));
+                    setfontbkcolor(EGERGB(255, 190, 100));
+                    outtextxy(650, 538+(i-1)*50, "等待第二辆车");
                     break;
             }
         }

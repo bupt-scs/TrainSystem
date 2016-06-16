@@ -1,7 +1,7 @@
 # depslib dependency file v1.0
 1464465748 source:c:\users\alex yu\onedrive\code\c作业\train\trainsystem\train\enum.c
 
-1466084314 c:\users\alex yu\onedrive\code\c作业\train\trainsystem\train\train.h
+1466098655 c:\users\alex yu\onedrive\code\c作业\train\trainsystem\train\train.h
 	<cstdio>
 	<cmath>
 	<string.h>
@@ -137,36 +137,36 @@
 	"Train.h"
 	"global.h"
 
-1466081323 source:c:\users\alex yu\onedrive\code\c作业\train\trainsystem\train\debug_standaloneio.cpp
+1466098655 source:c:\users\alex yu\onedrive\code\c作业\train\trainsystem\train\debug_standaloneio.cpp
 	"Train.h"
 	"global.h"
 
-1466081323 c:\users\alex yu\onedrive\code\c作业\train\trainsystem\train\global.h
+1466098655 c:\users\alex yu\onedrive\code\c作业\train\trainsystem\train\global.h
 	"Train.h"
 
-1466081323 source:c:\users\alex yu\onedrive\code\c作业\train\trainsystem\train\enum.cpp
+1466098655 source:c:\users\alex yu\onedrive\code\c作业\train\trainsystem\train\enum.cpp
 	"global.h"
 
-1466081323 source:c:\users\alex yu\onedrive\code\c作业\train\trainsystem\train\freelists.cpp
-	"Train.h"
-	"global.h"
-
-1466081323 source:c:\users\alex yu\onedrive\code\c作业\train\trainsystem\train\global.cpp
-	"global.h"
-
-1466082107 source:c:\users\alex yu\onedrive\code\c作业\train\trainsystem\train\graph.cpp
+1466098655 source:c:\users\alex yu\onedrive\code\c作业\train\trainsystem\train\freelists.cpp
 	"Train.h"
 	"global.h"
 
-1466084284 source:c:\users\alex yu\onedrive\code\c作业\train\trainsystem\train\io.cpp
+1466098655 source:c:\users\alex yu\onedrive\code\c作业\train\trainsystem\train\global.cpp
+	"global.h"
+
+1466098874 source:c:\users\alex yu\onedrive\code\c作业\train\trainsystem\train\graph.cpp
 	"Train.h"
 	"global.h"
 
-1466083344 source:c:\users\alex yu\onedrive\code\c作业\train\trainsystem\train\main.cpp
+1466098655 source:c:\users\alex yu\onedrive\code\c作业\train\trainsystem\train\io.cpp
 	"Train.h"
 	"global.h"
 
-1466082407 source:c:\users\alex yu\onedrive\code\c作业\train\trainsystem\train\move.cpp
+1466098655 source:c:\users\alex yu\onedrive\code\c作业\train\trainsystem\train\main.cpp
+	"Train.h"
+	"global.h"
+
+1466098655 source:c:\users\alex yu\onedrive\code\c作业\train\trainsystem\train\move.cpp
 	"Train.h"
 	"global.h"
 
