@@ -417,33 +417,37 @@ void printCheckPoint()
 {
     PIMAGE checkPoint;
     //³µ1
-    if(trainList.train[1]->status==WAIT&&trainList.train[1]->pos<=commonTrackList.commonTrack[1]->track1in)
+    if(trainList.train[1]->status==WAIT
+       &&trainList.train[1]->pos<=commonTrackList.commonTrack[1]->track1in
+       &&trainList.train[1]->pos>=commonTrackList.commonTrack[1]->track1in-100)
     {
         checkPoint = newimage();
         getimage(checkPoint,"img/checkPoint/checkPointRed.png");
-        putimage(160,108,checkPoint);
+        putimage(165,108,checkPoint);
         delimage(checkPoint);
     }
     else
     {
         checkPoint = newimage();
         getimage(checkPoint,"img/checkPoint/checkPointGreen.png");
-        putimage(160,108,checkPoint);
+        putimage(165,108,checkPoint);
         delimage(checkPoint);
     }
 
-    if(trainList.train[1]->status==WAIT&&trainList.train[1]->pos>=commonTrackList.commonTrack[1]->track1out)
+    if(trainList.train[1]->status==WAIT
+       &&trainList.train[1]->pos>=commonTrackList.commonTrack[1]->track1out
+        &&trainList.train[1]->pos<=commonTrackList.commonTrack[1]->track1out+100)
     {
         checkPoint = newimage();
         getimage(checkPoint,"img/checkPoint/checkPointRed.png");
-        putimage(160,252,checkPoint);
+        putimage(165,252,checkPoint);
         delimage(checkPoint);
     }
     else
     {
         checkPoint = newimage();
         getimage(checkPoint,"img/checkPoint/checkPointGreen.png");
-        putimage(160,252,checkPoint);
+        putimage(165,252,checkPoint);
         delimage(checkPoint);
     }
     //train 2
@@ -453,31 +457,31 @@ void printCheckPoint()
     {
         checkPoint = newimage();
         getimage(checkPoint,"img/checkPoint/checkPointRed.png");
-        putimage(210,250,checkPoint);
+        putimage(215,247,checkPoint);
         delimage(checkPoint);
     }
     else
     {
         checkPoint = newimage();
         getimage(checkPoint,"img/checkPoint/checkPointGreen.png");
-        putimage(210,250,checkPoint);
+        putimage(215,247,checkPoint);
         delimage(checkPoint);
     }
 
     if(trainList.train[2]->status==WAIT
-       &&trainList.train[1]->pos>=commonTrackList.commonTrack[1]->track2out
-       &&trainList.train[1]->pos<=commonTrackList.commonTrack[1]->track2out+100)
+       &&trainList.train[2]->pos>=commonTrackList.commonTrack[1]->track2out
+       &&trainList.train[2]->pos<=commonTrackList.commonTrack[1]->track2out+100)
     {
         checkPoint = newimage();
         getimage(checkPoint,"img/checkPoint/checkPointRed.png");
-        putimage(210,112,checkPoint);
+        putimage(215,117,checkPoint);
         delimage(checkPoint);
     }
     else
     {
         checkPoint = newimage();
         getimage(checkPoint,"img/checkPoint/checkPointGreen.png");
-        putimage(210,112,checkPoint);
+        putimage(215,117,checkPoint);
         delimage(checkPoint);
     }
 
