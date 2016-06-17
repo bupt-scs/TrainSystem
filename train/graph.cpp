@@ -132,9 +132,12 @@ DWORD WINAPI printGraph(LPVOID pPararneter)
 
 		cleardevice();
 
-		putimage(0,0,backGround);
-        printTrain();
-        printCommonTrack();
+		putimage(0,0,backGround);//背景部分
+
+		printStation();
+        printTrain();//图形化文字输出火车状态
+        printCommonTrack();//图形化文字输出公共轨道状态
+        printCheckPoint();
 
         insByMouse(msg,&trainID);//右侧按钮面板
 
@@ -356,6 +359,128 @@ void insByMouse(mouse_msg msg,int *trainID)
       //  itoa(trainList.train[4]->spd, str, 10);
        // outtextxy(0, 0, str);
    //     ReleaseMutex(hMutex);
+}
+
+void printStation()
+{
+    PIMAGE station;
+
+    if(trainList.train[1]->status==STATION&&trainList.train[1]->pos==trackList.track[1]->stationPos[0])
+    {
+        station = newimage();
+        getimage(station,"img/station/station_1_1.png");
+        putimage(80,167,station);
+        delimage(station);
+    }
+    else
+    {
+        station = newimage();
+        getimage(station,"img/station/station_1_0.png");
+        putimage(80,167,station);
+        delimage(station);
+    }
+
+    if(trainList.train[1]->status==STATION&&trainList.train[1]->pos==trackList.track[1]->stationPos[1]
+       ||trainList.train[2]->status==STATION&&trainList.train[2]->pos==trackList.track[2]->stationPos[1])
+    {
+        station = newimage();
+        getimage(station,"img/station/station_1_1.png");
+        putimage(215,170,station);
+        delimage(station);
+    }
+    else
+    {
+        station = newimage();
+        getimage(station,"img/station/station_1_0.png");
+        putimage(215,170,station);
+        delimage(station);
+    }
+
+    if(trainList.train[2]->status==STATION&&trainList.train[2]->pos==trackList.track[2]->stationPos[0]
+       ||trainList.train[3]->status==STATION&&trainList.train[3]->pos==trackList.track[3]->stationPos[0])
+    {
+        station = newimage();
+        getimage(station,"img/station/station_0_1.png");
+        putimage(332,246,station);
+        delimage(station);
+    }
+    else
+    {
+        station = newimage();
+        getimage(station,"img/station/station_0_0.png");
+        putimage(332,246,station);
+        delimage(station);
+    }
+}
+
+void printCheckPoint()
+{
+    PIMAGE checkPoint;
+    //车1
+    if(trainList.train[1]->status==WAIT&&trainList.train[1]->pos<=commonTrackList.commonTrack[1]->track1in)
+    {
+        checkPoint = newimage();
+        getimage(checkPoint,"img/checkPoint/checkPointRed.png");
+        putimage(160,108,checkPoint);
+        delimage(checkPoint);
+    }
+    else
+    {
+        checkPoint = newimage();
+        getimage(checkPoint,"img/checkPoint/checkPointGreen.png");
+        putimage(160,108,checkPoint);
+        delimage(checkPoint);
+    }
+
+    if(trainList.train[1]->status==WAIT&&trainList.train[1]->pos>=commonTrackList.commonTrack[1]->track1out)
+    {
+        checkPoint = newimage();
+        getimage(checkPoint,"img/checkPoint/checkPointRed.png");
+        putimage(160,252,checkPoint);
+        delimage(checkPoint);
+    }
+    else
+    {
+        checkPoint = newimage();
+        getimage(checkPoint,"img/checkPoint/checkPointGreen.png");
+        putimage(160,252,checkPoint);
+        delimage(checkPoint);
+    }
+    //train 2
+    if(trainList.train[2]->status==WAIT
+       &&trainList.train[2]->pos<=commonTrackList.commonTrack[1]->track2in
+       &&trainList.train[2]->pos>=commonTrackList.commonTrack[1]->track2in-100)
+    {
+        checkPoint = newimage();
+        getimage(checkPoint,"img/checkPoint/checkPointRed.png");
+        putimage(210,250,checkPoint);
+        delimage(checkPoint);
+    }
+    else
+    {
+        checkPoint = newimage();
+        getimage(checkPoint,"img/checkPoint/checkPointGreen.png");
+        putimage(210,250,checkPoint);
+        delimage(checkPoint);
+    }
+
+    if(trainList.train[2]->status==WAIT
+       &&trainList.train[1]->pos>=commonTrackList.commonTrack[1]->track2out
+       &&trainList.train[1]->pos<=commonTrackList.commonTrack[1]->track2out+100)
+    {
+        checkPoint = newimage();
+        getimage(checkPoint,"img/checkPoint/checkPointRed.png");
+        putimage(210,112,checkPoint);
+        delimage(checkPoint);
+    }
+    else
+    {
+        checkPoint = newimage();
+        getimage(checkPoint,"img/checkPoint/checkPointGreen.png");
+        putimage(210,112,checkPoint);
+        delimage(checkPoint);
+    }
+
 }
 
 void printTrain()

@@ -195,4 +195,6 @@ DWORD WINAPI printGraph(LPVOID pPararneter);
 
 void printTrain();
 void printCommonTrack();
+void printStation();
+void printCheckPoint();
 #endif
