@@ -101,8 +101,8 @@ void drawobj(AniObj* obj)
 
 DWORD WINAPI printGraph(LPVOID pPararneter)
 {
-	AniObj obj[MAX_TRAIN_AMOUNT]; //定义对象数组
 	int i,trainID = 1;
+	tacticsOrIns=0;
 
 	for (i = 0; i < MAX_TRAIN_AMOUNT; i++)
 	{
@@ -135,19 +135,59 @@ DWORD WINAPI printGraph(LPVOID pPararneter)
 		putimage(0,0,backGround);//背景部分
 
 		printStation();
-        printTrain();//图形化文字输出火车状态
-        printCommonTrack();//图形化文字输出公共轨道状态
+        printTrainInformation();//图形化文字输出火车状态
+        printCommonTrackInformation();;//图形化文字输出公共轨道状态
         printCheckPoint();
 
-        insByMouse(msg,&trainID);//右侧按钮面板
+        setfont(22, 0, "宋体");
+        setfontbkcolor(EGERGB(164, 164, 164));
 
-        for (i = 0; i < MAX_TRAIN_AMOUNT; i++)
+        if(tacticsOrIns==0)
         {
-            if(trainList.train[i]!=NULL)
+            setcolor(EGERGB(255, 236, 77));
+            outtextxy(633, 81, "选择指令");
+            setcolor(EGERGB(0,0,0));
+            outtextxy(730, 80, "更改策略");
+            insByMouse(msg,&trainID);//右侧按钮面板
+        }
+        else if(tacticsOrIns==1)
+        {
+            setcolor(EGERGB(255, 236, 77));
+            outtextxy(730, 80, "更改策略");
+            setcolor(EGERGB(0,0,0));
+            outtextxy(633, 81, "选择指令");
+            choiceTactics(msg);//右侧按钮面板
+        }
+
+        if(tacticsOrIns!=2)
+        {
+            setfont(22, 0, "宋体");
+            if(msg.x>633&&msg.x<715&&msg.y>80&&msg.y<103)
             {
-                drawobj(&obj[i]);
+                if((int)msg.is_down()==0&& tacticsOrIns==1)
+                {
+                    setcolor(EGERGB(35, 248, 235));
+                    outtextxy(633, 81, "选择指令");
+                }
+                else if((int)msg.is_down())
+                {
+                    tacticsOrIns=0;
+                }
+            }
+            else if(msg.x>730&&msg.x<830&&msg.y>80&&msg.y<103)
+            {
+                if((int)msg.is_down()==0&& tacticsOrIns==0)
+                {
+                    setcolor(EGERGB(35, 248, 235));
+                    outtextxy(730, 80, "更改策略");
+                }
+                else if((int)msg.is_down())
+                {
+                    tacticsOrIns=1;
+                }
             }
         }
+        printTrain();
         ReleaseMutex(hMutex);
 	}
 	closegraph();
@@ -193,49 +233,49 @@ void insByMouse(mouse_msg msg,int *trainID)
         setcolor(EGERGB(0, 0, 0));
         setfontbkcolor(EGERGB(164, 164, 164));
         setfont(25, 0, "宋体");
-        outtextxy(633, 100, "Train 1");
-        outtextxy(633, 145, "Train 2");
-        outtextxy(633, 190, "Train 3");
+        outtextxy(633, 120, "Train 1");
+        outtextxy(633, 165, "Train 2");
+        outtextxy(633, 210, "Train 3");
 
         setcolor(EGERGB(255, 236, 77));
 
         switch(*trainID)
         {
-            case 1:outtextxy(633, 100, "Train 1");break;
-            case 2:outtextxy(633, 145, "Train 2");break;
-            case 3:outtextxy(633, 190, "Train 3");break;
+            case 1:outtextxy(633, 120, "Train 1");break;
+            case 2:outtextxy(633, 165, "Train 2");break;
+            case 3:outtextxy(633, 210, "Train 3");break;
         }
 
-        if(msg.x>633&&msg.x<725&&msg.y>96&&msg.y<129)
+        if(msg.x>633&&msg.x<725&&msg.y>116&&msg.y<149)
         {
             if((int)msg.is_down()==0&& *trainID!=1)
             {
                 setcolor(EGERGB(35, 248, 235));
-                outtextxy(633, 100, "Train 1");
+                outtextxy(633, 120, "Train 1");
             }
             else if((int)msg.is_down())
             {
                 *trainID = 1;
             }
         }
-        else if(msg.x>633&&msg.x<725&&msg.y>141&&msg.y<174)
+        else if(msg.x>633&&msg.x<725&&msg.y>161&&msg.y<194)
         {
             if((int)msg.is_down()==0&& *trainID!=2)
             {
                 setcolor(EGERGB(35, 248, 235));
-                outtextxy(633, 145, "Train 2");
+                outtextxy(633, 165, "Train 2");
             }
             else if((int)msg.is_down())
             {
                 *trainID = 2;
             }
         }
-        else if(msg.x>633&&msg.x<725&&msg.y>186&&msg.y<219)
+        else if(msg.x>633&&msg.x<725&&msg.y>206&&msg.y<239)
         {
             if((int)msg.is_down()==0&& *trainID!=3)
             {
                 setcolor(EGERGB(35, 248, 235));
-                outtextxy(633, 190, "Train 3");
+                outtextxy(633, 210, "Train 3");
             }
             else if((int)msg.is_down())
             {
@@ -417,77 +457,196 @@ void printCheckPoint()
 {
     PIMAGE checkPoint;
     //车1
-    if(trainList.train[1]->status==WAIT
+    if((trainList.train[1]->status==WAIT
        &&trainList.train[1]->pos<=commonTrackList.commonTrack[1]->track1in
        &&trainList.train[1]->pos>=commonTrackList.commonTrack[1]->track1in-100)
+       ||(trainList.train[2]->status==WAIT
+       &&trainList.train[2]->pos>=commonTrackList.commonTrack[1]->track2out
+       &&trainList.train[2]->pos<=commonTrackList.commonTrack[1]->track2out+100))
     {
         checkPoint = newimage();
         getimage(checkPoint,"img/checkPoint/checkPointRed.png");
-        putimage(165,108,checkPoint);
+        putimage(208,118,checkPoint);
         delimage(checkPoint);
     }
     else
     {
         checkPoint = newimage();
         getimage(checkPoint,"img/checkPoint/checkPointGreen.png");
-        putimage(165,108,checkPoint);
+        putimage(208,118,checkPoint);
         delimage(checkPoint);
     }
 
-    if(trainList.train[1]->status==WAIT
+    if((trainList.train[1]->status==WAIT
        &&trainList.train[1]->pos>=commonTrackList.commonTrack[1]->track1out
         &&trainList.train[1]->pos<=commonTrackList.commonTrack[1]->track1out+100)
-    {
-        checkPoint = newimage();
-        getimage(checkPoint,"img/checkPoint/checkPointRed.png");
-        putimage(165,252,checkPoint);
-        delimage(checkPoint);
-    }
-    else
-    {
-        checkPoint = newimage();
-        getimage(checkPoint,"img/checkPoint/checkPointGreen.png");
-        putimage(165,252,checkPoint);
-        delimage(checkPoint);
-    }
-    //train 2
-    if(trainList.train[2]->status==WAIT
+        ||
+        (trainList.train[2]->status==WAIT
        &&trainList.train[2]->pos<=commonTrackList.commonTrack[1]->track2in
-       &&trainList.train[2]->pos>=commonTrackList.commonTrack[1]->track2in-100)
+       &&trainList.train[2]->pos>=commonTrackList.commonTrack[1]->track2in-100))
     {
         checkPoint = newimage();
         getimage(checkPoint,"img/checkPoint/checkPointRed.png");
-        putimage(215,247,checkPoint);
+        putimage(208,244,checkPoint);
         delimage(checkPoint);
     }
     else
     {
         checkPoint = newimage();
         getimage(checkPoint,"img/checkPoint/checkPointGreen.png");
-        putimage(215,247,checkPoint);
+        putimage(208,244,checkPoint);
         delimage(checkPoint);
     }
-
-    if(trainList.train[2]->status==WAIT
-       &&trainList.train[2]->pos>=commonTrackList.commonTrack[1]->track2out
-       &&trainList.train[2]->pos<=commonTrackList.commonTrack[1]->track2out+100)
+    //第二个
+    if((trainList.train[2]->status==WAIT
+       &&trainList.train[2]->pos>=commonTrackList.commonTrack[2]->track1out-100
+        &&trainList.train[2]->pos<=commonTrackList.commonTrack[2]->track1out+100)
+        ||
+        (trainList.train[3]->status==WAIT
+       &&trainList.train[3]->pos<=commonTrackList.commonTrack[2]->track2in+100
+       &&trainList.train[3]->pos>=commonTrackList.commonTrack[2]->track2in-100))
     {
         checkPoint = newimage();
         getimage(checkPoint,"img/checkPoint/checkPointRed.png");
-        putimage(215,117,checkPoint);
+        putimage(224,244,checkPoint);
         delimage(checkPoint);
     }
     else
     {
         checkPoint = newimage();
         getimage(checkPoint,"img/checkPoint/checkPointGreen.png");
-        putimage(215,117,checkPoint);
+        putimage(224,244,checkPoint);
         delimage(checkPoint);
     }
 
+    if((trainList.train[2]->status==WAIT
+       &&trainList.train[2]->pos<=commonTrackList.commonTrack[2]->track1in+100
+       &&trainList.train[2]->pos>=commonTrackList.commonTrack[2]->track1in-100)
+       ||(trainList.train[3]->status==WAIT
+       &&trainList.train[3]->pos>=commonTrackList.commonTrack[2]->track2out-100
+       &&trainList.train[3]->pos<=commonTrackList.commonTrack[2]->track2out+100))
+    {
+        checkPoint = newimage();
+        getimage(checkPoint,"img/checkPoint/checkPointRed.png");
+        putimage(463,244,checkPoint);
+        delimage(checkPoint);
+    }
+    else
+    {
+        checkPoint = newimage();
+        getimage(checkPoint,"img/checkPoint/checkPointGreen.png");
+        putimage(463,244,checkPoint);
+        delimage(checkPoint);
+    }
 }
 
-void printTrain()
+void choiceTactics(mouse_msg msg)
+{
+    if(CTW==0)
+    {
+        setcolor(EGERGB(255, 236, 77));
+        outtextxy(730, 140, "先到");
+        setcolor(EGERGB(0, 0, 0));
+        outtextxy(633, 140, "等待");
+    }
+    else
+    {
+        setcolor(EGERGB(255, 236, 77));
+        outtextxy(633, 140, "等待");
+        setcolor(EGERGB(0, 0, 0));
+        outtextxy(730, 140, "先到");
+    }
+
+    if(msg.x>633&&msg.x<715&&msg.y>140&&msg.y<170)
+    {
+        if((int)msg.is_down()==0&&CTW==0)
+        {
+            setcolor(EGERGB(35, 248, 235));
+            outtextxy(633,270,"等待");
+        }
+        else if((int)msg.is_down())
+        {
+            CTW=1;
+        }
+    }
+    else if(msg.x>730&&msg.x<780&&msg.y>140&&msg.y<170)
+    {
+        if((int)msg.is_down()==0&&CTW==1)
+        {
+            setcolor(EGERGB(35, 248, 235));
+            outtextxy(730, 140, "先到");
+        }
+        else if((int)msg.is_down())
+        {
+            CTW=0;
+        }
+    }
+
+
+    setcolor(EGERGB(0, 0, 0));
+    outtextxy(633,270,"快车");outtextxy(730,270,"询问");
+    outtextxy(633,320,"随机");outtextxy(730,320,"交替");
+
+    setcolor(EGERGB(255, 236, 77));
+    switch(CTSTG)
+    {
+        case FFI:outtextxy(633,270,"快车");break;
+        case ASK:outtextxy(730,270,"询问");break;
+        case RAD:outtextxy(633,320,"随机");break;
+        case JT:outtextxy(730,320,"交替");
+    }
+
+    if(msg.x>633&&msg.x<715&&msg.y>270&&msg.y<300)
+    {
+        if((int)msg.is_down()==0&&CTSTG!=FFI)
+        {
+            setcolor(EGERGB(35, 248, 235));
+            outtextxy(633,270,"快车");
+        }
+        else if((int)msg.is_down())
+        {
+            CTSTG=FFI;
+        }
+    }
+    else if(msg.x>730&&msg.x<830&&msg.y>270&&msg.y<300)
+    {
+        if((int)msg.is_down()==0&&CTSTG!=ASK)
+        {
+            setcolor(EGERGB(35, 248, 235));
+            outtextxy(730,270,"询问");
+        }
+        else if((int)msg.is_down())
+        {
+            CTSTG=ASK;
+        }
+    }
+    else if(msg.x>633&&msg.x<715&&msg.y>320&&msg.y<350)
+    {
+        if((int)msg.is_down()==0&&CTSTG!=RAD)
+        {
+            setcolor(EGERGB(35, 248, 235));
+            outtextxy(633,320,"随机");
+        }
+        else if((int)msg.is_down())
+        {
+            CTSTG=RAD;
+        }
+    }
+    else if(msg.x>730&&msg.x<830&&msg.y>320&&msg.y<350)
+    {
+        if((int)msg.is_down()==0&&CTSTG!=JT)
+        {
+            setcolor(EGERGB(35, 248, 235));
+            outtextxy(730,320,"交替");
+        }
+        else if((int)msg.is_down())
+        {
+            CTSTG=JT;
+        }
+    }
+}
+
+void printTrainInformation()
 {
     int i;
     char str[20];
@@ -545,7 +704,7 @@ void printTrain()
     }
 }
 
-void printCommonTrack()
+void printCommonTrackInformation()
 {
     int i;
     char str[20],num[20];
@@ -590,4 +749,86 @@ void printCommonTrack()
             }
         }
     }
+}
+
+int askForPass(int train1, int train2)
+{
+    int i;
+    cleardevice();
+    for (i = 0; i < MAX_TRAIN_AMOUNT; i++)
+    {
+        if(trainList.train[i]!=NULL)
+        {
+            posToGraph(&obj[i]);
+        }
+    }
+
+    putimage(0,0,backGround);//背景部分
+    printStation();
+    printTrainInformation();//图形化文字输出火车状态
+    printCommonTrackInformation();;//图形化文字输出公共轨道状态
+    printTrain();
+    printCheckPoint();
+
+    setcolor(EGERGB(0, 0, 0));
+    setfontbkcolor(EGERGB(164, 164, 164));
+    outtextxy(617, 120, "请选择优先通过的火车序号！");
+
+    mouse_msg msg = {0};
+
+	for ( ; is_run(); delay_fps(60) )
+	{
+        while (mousemsg())
+		{
+			msg = getmouse();
+		}
+
+		setcolor(EGERGB(0, 0, 0));
+
+        char s1[100];
+        char s2[100];
+        sprintf(s1,"Train %d",train1);
+        outtextxy(640, 170,s1);
+
+        char s[100];
+        sprintf(s2,"Train %d",train2);
+        outtextxy(640, 210,s2);
+
+        if(msg.x>640&&msg.x<715&&msg.y>170&&msg.y<200)
+        {
+            if((int)msg.is_down()==0)
+            {
+                setcolor(EGERGB(35, 248, 235));
+                outtextxy(640, 170,s1);
+            }
+            else if((int)msg.is_down())
+            {
+                return train1;
+            }
+        }
+        else if(msg.x>640&&msg.x<715&&msg.y>210&&msg.y<240)
+        {
+            if((int)msg.is_down()==0)
+            {
+                setcolor(EGERGB(35, 248, 235));
+                outtextxy(640, 210,s2);
+            }
+            else if((int)msg.is_down())
+            {
+                return train2;
+            }
+        }
+	}
+}
+
+void printTrain()
+{
+    int i;
+    for (i = 0; i < MAX_TRAIN_AMOUNT; i++)
+        {
+            if(trainList.train[i]!=NULL)
+            {
+                drawobj(&obj[i]);
+            }
+        }
 }

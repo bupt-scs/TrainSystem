@@ -193,8 +193,11 @@ struct AniObj
 void insByMouse(mouse_msg msg,int *trainID);
 DWORD WINAPI printGraph(LPVOID pPararneter);
 
-void printTrain();
-void printCommonTrack();
+void printTrainInformation();
+void printCommonTrackInformation();
 void printStation();
 void printCheckPoint();
+void choiceTactics(mouse_msg msg);
+void printTrain();
+int askForPass(int train1, int train2);
 #endif

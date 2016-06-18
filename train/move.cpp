@@ -197,7 +197,10 @@ void judgeCommonTrack(CommonTrack* cT,Train* enter[],int ei,clock_t curTime){
                     case ASK:{
                         //showTrain();
                         printf("输入准许进入的列车ID：");
-                        int idin; fflush(stdin);scanf("%d",&idin);
+                        int idin; fflush(stdin);//scanf("%d",&idin);
+
+                        idin = askForPass(enter[0]->ID,enter[1]->ID);
+                        //在这里修改图形化内容
                         printf("列车 ID %d 受授权进入公共轨道，其他列车停车等待\n",idin);
                         fprintf(log,"列车 ID %d 受授权进入公共轨道，其他列车停车等待\n",idin);
                         //fLog(0,"Log.txt",idin,"用户准入公共轨道。其他列车停车等待。",curTime);

@@ -18,3 +18,6 @@ Ins trainIns[MAX_TRAIN_AMOUNT];//指令列表
 PIMAGE backGround;
 PIMAGE trainPic;
 PIMAGE button;
+
+int tacticsOrIns;
+AniObj obj[MAX_TRAIN_AMOUNT]; //定义对象数组
