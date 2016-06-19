@@ -14,7 +14,7 @@ void Animation(void){
     }
     for(i = 0;i < 75;i++){
         putimage(0,0,img[i]);
-        delay_fps(8);
+        delay_fps(20);
     }
     for(i = 0;i < 75;i++)   delimage(img[i]);
 }

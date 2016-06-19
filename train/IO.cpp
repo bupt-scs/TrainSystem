@@ -414,37 +414,38 @@ void dataInit()
 	fclose(fptr);
 	system("cls");
 	startShow();
-	printf("1.先到询问人工\n2.先到快车优先\n3.先到随机策略\n4.等待询问人工\n5.等待快车优先\n6.等待随机策略\n\n");
+	printf("1.先到询问人工\n2.先到快车优先\n3.先到随机策略\n4.先到交替策略\n5.等待询问人工\n6.等待快车优先\n7.等待随机策略\n8.等待交替策略\n\n");
 	printf("请选择公共轨道调度策略(输入?获取策略说明):");
 	ch = getchar();
 	fflush(stdin);
 	do{
-        while((ch<'1'||ch>'6')&&(ch!='?'&&ch!='？'))
+        while((ch<'1'||ch>'8')&&(ch!='?'&&ch!='？'))
         {
             fflush(stdin);
             printf("请重新输入:");
             ch = getchar();
         }
         if(ch=='?'||ch=='？'){
-            printf("\n策略说明：\n\t先到询问人工，先到快车优先，先到随机策略：\n\t\t");
+            printf("\n策略说明：\n\t先到询问人工，先到快车优先，先到随机，先到交替策略：\n\t\t");
             printf("列车到达公共轨道入口后就进入，除非有另一辆车要同时进入公共轨道。\n\t\t");
-            printf("若有两辆车同时进入公共轨道，则按询问人工/快车优先/随机处理。\n\n\t");
+            printf("若有两辆车同时进入公共轨道，则按询问人工/快车优先/随机/交替处理。\n\n\t");
             printf("等待询问人工，等待快车优先，等待随机策略：\n\t\t");
             printf("列车到达公共轨道入口后停车等待，直到有另一辆车也要进入公共轨道。\n\t\t");
-            printf("按询问人工/快车优先/随机处理。\n\n");
+            printf("按询问人工/快车优先/随机/交替处理。\n\n");
             printf("请选择公共轨道调度策略(输入？获取策略说明):");
             ch = getchar();
         }
 	}
-	while(ch<'1'||ch>'6');
+	while(ch<'1'||ch>'8');
 
-	if(ch<='3') CTW=0;
+	if(ch<='4') CTW=0;
 	else CTW=1;
 	 if(CTW) printf("等待");
     switch(ch){
-        case '1':case '4': CTSTG=ASK;printf("询问人工策略已选择\n");break;
-        case '2':case '5': CTSTG=FFI;printf("快车先行策略已选择\n");break;
-        case '3':case '6': CTSTG=RAD;printf("随机策略已选择\n");break;
+        case '1':case '5': CTSTG=ASK;printf("询问人工策略已选择\n");break;
+        case '2':case '6': CTSTG=FFI;printf("快车先行策略已选择\n");break;
+        case '3':case '7': CTSTG=RAD;printf("随机策略已选择\n");break;
+        case '4':case '8': CTSTG=JT;printf("交替策略已选择\n");break;
     }
 
 }
