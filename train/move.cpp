@@ -410,7 +410,7 @@ for(id1 = 0;i1&&id1<MAX_TRAIN_AMOUNT;id1++)     //遍历火车
     if(trainList.train[id1] != NULL){
         i1--;
         Train* t1 = trainList.train[id1];
-        if(t1->status == RUN || STATION)  //找出正在运行的火车
+        if(t1->status == RUN || t1->status == STATION)  //找出正在运行的火车
             for(id2=0,i2=trainList.amount;i2&&id2<MAX_TRAIN_AMOUNT;id2++)  //再次遍历火车= =
                 if(trainList.train[id2] != NULL){
                     i2--;
