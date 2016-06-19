@@ -149,23 +149,25 @@ void drawobj(AniObj* obj,int trainID){
 
 void drawComtrack(void){
     PIMAGE comtrack1,comtrack2;
+    PIMAGE bg;
+    //getimage(bg,"img/background.png");
     switch(commonTrackList.commonTrack[1] -> status){
         case BUSY:
         comtrack1 = newimage();
         getimage(comtrack1,"img/cts/1BUSY.png");
-        putimage(181,158,comtrack1);
+        putimage_alphablend(NULL,comtrack1,181,158,90);
         delimage(comtrack1);
         break;
         case ctWAIT:
         comtrack1 = newimage();
-        getimage(comtrack1,"img/cts/1WAIT.png");
-        putimage(181,158,comtrack1);
+        getimage(comtrack1,"img/cts/1ctWAIT.png");
+        putimage_alphablend(NULL,comtrack1,181,158,90);
         delimage(comtrack1);
         break;
         case FREE:
         comtrack1 = newimage();
         getimage(comtrack1,"img/cts/1FREE.png");
-        putimage(181,158,comtrack1);
+        putimage_alphablend(NULL,comtrack1,181,158,90);
         delimage(comtrack1);
         break;
     }
@@ -173,19 +175,19 @@ void drawComtrack(void){
         case BUSY:
         comtrack2 = newimage();
         getimage(comtrack2,"img/cts/2BUSY.png");
-        putimage(260,217,comtrack2);
+        putimage_alphablend(NULL,comtrack2,260,217,90);
         delimage(comtrack2);
         break;
         case ctWAIT:
         comtrack2 = newimage();
-        getimage(comtrack2,"img/cts/2WAIT.png");
-        putimage(260,217,comtrack2);
+        getimage(comtrack2,"img/cts/2ctWAIT.png");
+        putimage_alphablend(NULL,comtrack2,260,217,90);
         delimage(comtrack2);
         break;
         case FREE:
         comtrack2 = newimage();
         getimage(comtrack2,"img/cts/2FREE.png");
-        putimage(260,217,comtrack2);
+        putimage_alphablend(NULL,comtrack2,260,217,90);
         delimage(comtrack2);
         break;
     }
