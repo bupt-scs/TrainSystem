@@ -440,7 +440,8 @@ void insByMouse(mouse_msg msg,int *trainID)
                 putimage(636,322,button);
                 delimage(button);
 
-                trainList.train[*trainID]->spd ++;
+                if(trainList.train[*trainID]->spd<5)
+                    trainList.train[*trainID]->spd ++;
             }
         }
         else if(msg.x>737&&msg.x<817&&msg.y>322&&msg.y<372)
@@ -459,7 +460,8 @@ void insByMouse(mouse_msg msg,int *trainID)
                 putimage(737,322,button);
                 delimage(button);
 
-                trainList.train[*trainID]->spd --;
+                if(trainList.train[*trainID]->spd>1)
+                    trainList.train[*trainID]->spd --;
             }
         }//µÚÈýÐÐ
         else if(msg.x>636&&msg.x<717&&msg.y>382&&msg.y<432)
