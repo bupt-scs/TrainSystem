@@ -597,6 +597,7 @@ void printCheckPoint()
         putimage(208,118,checkPointGreen);
     }
 
+
     if((trainList.train[1]->status==WAIT
        &&trainList.train[1]->pos>=commonTrackList.commonTrack[1]->track1out
         &&trainList.train[1]->pos<=commonTrackList.commonTrack[1]->track1out+100)
