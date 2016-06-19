@@ -26,3 +26,5 @@ PIMAGE checkPointRed;
 
 int tacticsOrIns;
 AniObj obj[MAX_TRAIN_AMOUNT]; //定义对象数组
+
+clock_t mouseFlag;

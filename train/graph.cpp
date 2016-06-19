@@ -229,10 +229,21 @@ DWORD WINAPI printGraph(LPVOID pPararneter)
 
 		putimage(0,0,backGround);//背景部分
 
+		setcolor(EGERGB(255, 236, 77));
 		char s[100];
             sprintf(s,"运行时间 %.1f s",
                 (double)(currentTime-startTime)/CLOCKS_PER_SEC);
             outtextxy(350, 60,s);
+
+        char s1[23];
+        switch(CTSTG){
+            case JT: sprintf(s1,"交替策略"); break;
+            case FFI: sprintf(s1,"快车优先策略"); break;
+            case ASK: sprintf(s1,"询问策略"); break;
+            case RAD: sprintf(s1,"随机策略"); break;
+        }
+        sprintf(s,"%s%s",CTW?"等待 ":"先到 ",s1);
+        outtextxy(350,83,s);
 
 		printStation();
         printTrainInformation();//图形化文字输出火车状态
@@ -435,13 +446,20 @@ void insByMouse(mouse_msg msg,int *trainID)
             }
             else
             {
-                button = newimage();
-                getimage(button,"img/button/spdup_2.png");
-                putimage(636,322,button);
-                delimage(button);
+                if((double)(currentTime-mouseFlag)/CLOCKS_PER_SEC>0.5)
+                {
+                    if(trainList.train[*trainID]->spd<5)
+                    {
+                        button = newimage();
+                        getimage(button,"img/button/spdup_2.png");
+                        putimage(636,322,button);
+                        delimage(button);
 
-                if(trainList.train[*trainID]->spd<5)
-                    trainList.train[*trainID]->spd ++;
+                        trainList.train[*trainID]->spd ++;
+
+                        mouseFlag = clock();
+                    }
+                }
             }
         }
         else if(msg.x>737&&msg.x<817&&msg.y>322&&msg.y<372)
@@ -455,13 +473,18 @@ void insByMouse(mouse_msg msg,int *trainID)
             }
             else
             {
-                button = newimage();
-                getimage(button,"img/button/spddown_2.png");
-                putimage(737,322,button);
-                delimage(button);
-
-                if(trainList.train[*trainID]->spd>1)
-                    trainList.train[*trainID]->spd --;
+                if((double)(currentTime-mouseFlag)/CLOCKS_PER_SEC>0.5)
+                {
+                    if(trainList.train[*trainID]->spd>-5)
+                    {
+                        button = newimage();
+                        getimage(button,"img/button/spddown_2.png");
+                        putimage(737,322,button);
+                        delimage(button);
+                        trainList.train[*trainID]->spd --;
+                        mouseFlag = clock();
+                    }
+                }
             }
         }//第三行
         else if(msg.x>636&&msg.x<717&&msg.y>382&&msg.y<432)

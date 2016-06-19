@@ -26,4 +26,6 @@ extern PIMAGE checkPointRed;
 extern int tacticsOrIns;
 
 extern AniObj obj[MAX_TRAIN_AMOUNT]; //定义对象数组
+
+extern clock_t mouseFlag;
 #endif

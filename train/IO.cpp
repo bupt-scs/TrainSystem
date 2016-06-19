@@ -256,10 +256,10 @@ void dataInit()
 			fgets(s,1000,fptr);
 		}
 	}
-	showTrack();
-	puts(hr);
+	//showTrack();
+	//puts(hr);
     fclose(fptr);
-
+/*
 	printf("是否需要更改\"轨道配置\"的信息？Y/N:");
     ch = getchar();
     while(ch!='Y'&&ch!='N'&&ch!='y'&&ch!='n')
@@ -352,10 +352,12 @@ void dataInit()
     system("cls");
     startShow();
     printf("内容已保存\n");
+    */
     showTrack();
     printf("此为当前\"轨道\"信息,按回车键进行下一步。");
     fflush(stdin);
     getchar();
+
     fflush(stdin);
     system("cls");
 //-------------------------------------公共轨道部分-------------------------------------
