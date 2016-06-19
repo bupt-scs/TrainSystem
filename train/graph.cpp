@@ -1,6 +1,24 @@
 #include "Train.h"
 #include "global.h"
 
+void Animation(void){
+    PIMAGE img[100];
+    char filename[100];
+    int i;
+    initgraph(900,675);
+    setbkcolor(BLACK);
+    for(i = 0;i < 75;i++){
+        img[i] = newimage();
+		sprintf(filename,"img/Animation/%d.jpg",i);
+		getimage(img[i],filename);
+    }
+    for(i = 0;i < 75;i++){
+        putimage(0,0,img[i]);
+        delay_fps(8);
+    }
+    for(i = 0;i < 75;i++)   delimage(img[i]);
+}
+
 void posToGraph(AniObj* obj)
 {
     switch(trainList.train[obj->trainID]->trackID)
@@ -94,9 +112,83 @@ void initobj(AniObj* obj,int trainID)
 }
 
 //根据属性值绘画
-void drawobj(AniObj* obj)
-{
-	putimage(obj->x,obj->y,trainPic);
+void drawobj(AniObj* obj,int trainID){
+    PIMAGE train;
+    char filename[100];
+    switch(trainList.train[trainID] -> status){
+        case RUN:
+        train = newimage();
+        sprintf(filename,"img/train/%dRUN.png",trainID);
+        getimage(train,filename);
+        putimage(obj -> x,obj -> y,train);
+        delimage(train);
+        break;
+        case STATION:
+        train = newimage();
+        sprintf(filename,"img/train/%dSTATION.png",trainID);
+        getimage(train,filename);
+        putimage(obj -> x,obj -> y,train);
+        delimage(train);
+        break;
+        case WAIT:
+        train = newimage();
+        sprintf(filename,"img/train/%dWAIT.png",trainID);
+        getimage(train,filename);
+        putimage(obj -> x,obj -> y,train);
+        delimage(train);
+        break;
+        case STOP:
+        train = newimage();
+        sprintf(filename,"img/train/%dSTOP.png",trainID);
+        getimage(train,filename);
+        putimage(obj -> x,obj -> y,train);
+        delimage(train);
+        break;
+    }
+}
+
+void drawComtrack(void){
+    PIMAGE comtrack1,comtrack2;
+    switch(commonTrackList.commonTrack[1] -> status){
+        case BUSY:
+        comtrack1 = newimage();
+        getimage(comtrack1,"img/cts/1BUSY.png");
+        putimage(181,158,comtrack1);
+        delimage(comtrack1);
+        break;
+        case ctWAIT:
+        comtrack1 = newimage();
+        getimage(comtrack1,"img/cts/1WAIT.png");
+        putimage(181,158,comtrack1);
+        delimage(comtrack1);
+        break;
+        case FREE:
+        comtrack1 = newimage();
+        getimage(comtrack1,"img/cts/1FREE.png");
+        putimage(181,158,comtrack1);
+        delimage(comtrack1);
+        break;
+    }
+    switch(commonTrackList.commonTrack[2] -> status){
+        case BUSY:
+        comtrack2 = newimage();
+        getimage(comtrack2,"img/cts/2BUSY.png");
+        putimage(260,217,comtrack2);
+        delimage(comtrack2);
+        break;
+        case ctWAIT:
+        comtrack2 = newimage();
+        getimage(comtrack2,"img/cts/2WAIT.png");
+        putimage(260,217,comtrack2);
+        delimage(comtrack2);
+        break;
+        case FREE:
+        comtrack2 = newimage();
+        getimage(comtrack2,"img/cts/2FREE.png");
+        putimage(260,217,comtrack2);
+        delimage(comtrack2);
+        break;
+    }
 }
 
 DWORD WINAPI printGraph(LPVOID pPararneter)
@@ -114,6 +206,7 @@ DWORD WINAPI printGraph(LPVOID pPararneter)
 
     mouse_msg msg = {0};
 
+    Animation();
 	for ( ; is_run(); delay_fps(60) )
 	{
         while (mousemsg())
@@ -134,10 +227,16 @@ DWORD WINAPI printGraph(LPVOID pPararneter)
 
 		putimage(0,0,backGround);//背景部分
 
+		char s[100];
+            sprintf(s,"运行时间 %.1f s",
+                (double)(currentTime-startTime)/CLOCKS_PER_SEC);
+            outtextxy(350, 60,s);
+
 		printStation();
         printTrainInformation();//图形化文字输出火车状态
         printCommonTrackInformation();;//图形化文字输出公共轨道状态
         printCheckPoint();
+        drawComtrack();
 
         setfont(22, 0, "宋体");
         setfontbkcolor(EGERGB(164, 164, 164));
@@ -464,17 +563,11 @@ void printCheckPoint()
        &&trainList.train[2]->pos>=commonTrackList.commonTrack[1]->track2out
        &&trainList.train[2]->pos<=commonTrackList.commonTrack[1]->track2out+100))
     {
-        checkPoint = newimage();
-        getimage(checkPoint,"img/checkPoint/checkPointRed.png");
-        putimage(208,118,checkPoint);
-        delimage(checkPoint);
+        putimage(208,118,checkPointRed);
     }
     else
     {
-        checkPoint = newimage();
-        getimage(checkPoint,"img/checkPoint/checkPointGreen.png");
-        putimage(208,118,checkPoint);
-        delimage(checkPoint);
+        putimage(208,118,checkPointGreen);
     }
 
     if((trainList.train[1]->status==WAIT
@@ -485,17 +578,11 @@ void printCheckPoint()
        &&trainList.train[2]->pos<=commonTrackList.commonTrack[1]->track2in
        &&trainList.train[2]->pos>=commonTrackList.commonTrack[1]->track2in-100))
     {
-        checkPoint = newimage();
-        getimage(checkPoint,"img/checkPoint/checkPointRed.png");
-        putimage(208,244,checkPoint);
-        delimage(checkPoint);
+        putimage(208,244,checkPointRed);
     }
     else
     {
-        checkPoint = newimage();
-        getimage(checkPoint,"img/checkPoint/checkPointGreen.png");
-        putimage(208,244,checkPoint);
-        delimage(checkPoint);
+        putimage(208,244,checkPointGreen);
     }
     //第二个
     if((trainList.train[2]->status==WAIT
@@ -506,17 +593,11 @@ void printCheckPoint()
        &&trainList.train[3]->pos<=commonTrackList.commonTrack[2]->track2in+100
        &&trainList.train[3]->pos>=commonTrackList.commonTrack[2]->track2in-100))
     {
-        checkPoint = newimage();
-        getimage(checkPoint,"img/checkPoint/checkPointRed.png");
-        putimage(224,244,checkPoint);
-        delimage(checkPoint);
+        putimage(224,244,checkPointRed);
     }
     else
     {
-        checkPoint = newimage();
-        getimage(checkPoint,"img/checkPoint/checkPointGreen.png");
-        putimage(224,244,checkPoint);
-        delimage(checkPoint);
+        putimage(224,244,checkPointGreen);
     }
 
     if((trainList.train[2]->status==WAIT
@@ -828,7 +909,7 @@ void printTrain()
         {
             if(trainList.train[i]!=NULL)
             {
-                drawobj(&obj[i]);
+                drawobj(&obj[i],i);
             }
         }
 }

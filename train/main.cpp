@@ -16,8 +16,8 @@ int main(void)
     fshowCommonTrack("Log.txt");
     //初始化日志
 
-	clock_t currentTime = clock();
-	clock_t lastTime = clock();
+	currentTime = clock();
+	lastTime = clock();
 	int frameCount = FRAME_COUNT;
     const clock_t frameDur=40;
 
@@ -40,6 +40,11 @@ int main(void)
     getimage(trainPic,"img/train.png");
     button = newimage();
     getimage(button,"img/button/acc_0.png");
+    checkPointRed = newimage();
+    getimage(checkPointRed,"img/checkPoint/checkPointRed.png");
+    checkPointGreen = newimage();
+    getimage(checkPointGreen,"img/checkPoint/checkPointGreen.png");
+
     //鼠标监视线程
     HANDLE hThread1;
     //图形输出线程
